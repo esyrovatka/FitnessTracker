@@ -1,9 +1,16 @@
+// @flow
+
 import * as React from "react";
+import type { Node } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import AuthField from "./authField";
 
-const AuthContainer = ({ type }) => {
+type Props = {
+  name: string,
+};
+
+const AuthContainer = ({ name }: Props): Node => {
   const history = useHistory();
 
   const submitFunc = (event) => {
@@ -23,8 +30,7 @@ const AuthContainer = ({ type }) => {
   };
 
   const helpLink = () => {
-    type === "SignIn" && history.push("/registr");
-    type === "SignUp" && history.push("/login");
+    name === "SignIn" ? history.push("/registr") : history.push("/login");
   };
 
   return (
@@ -33,7 +39,7 @@ const AuthContainer = ({ type }) => {
       handleChange={handleChange}
       user={user}
       helpLink={helpLink}
-      type={type}
+      type={name}
     />
   );
 };

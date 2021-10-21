@@ -1,4 +1,7 @@
+// @flow
+
 import React from "react";
+import type { Node } from "react";
 import {
   Container,
   Box,
@@ -11,7 +14,22 @@ import {
   Link,
 } from "@mui/material/";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-const AuthField = ({ submitFunc, handleChange, user, helpLink, type }) => {
+
+type Props = {
+  submitFunc: Function,
+  handleChange: Function,
+  user: Object,
+  helpLink: Function,
+  type: string,
+};
+
+const AuthField = ({
+  submitFunc,
+  handleChange,
+  user,
+  helpLink,
+  type,
+}: Props): Node => {
   return (
     <Container component="main" maxWidth="xs">
       <Box

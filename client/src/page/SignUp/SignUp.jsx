@@ -4,7 +4,7 @@ import AuthField from "../../component/auth";
 const SignUp = () => {
   return (
     <div>
-      <AuthField type="SignUp" />
+      <AuthField name="SignUp" />
     </div>
   );
 };
