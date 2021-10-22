@@ -1,10 +1,11 @@
 // @flow
-
 import * as React from "react";
 import type { Node } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import AuthField from "./authField";
+import { useDispatch } from "react-redux";
+import { test } from "../../redux/action";
 
 type Props = {
   name: string,
@@ -12,10 +13,12 @@ type Props = {
 
 const AuthContainer = ({ name }: Props): Node => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const submitFunc = (event) => {
     event.preventDefault();
-    console.log(user);
+
+    dispatch(test(user));
   };
 
   const [user, setUser] = useState({
