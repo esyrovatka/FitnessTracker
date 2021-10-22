@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import AuthField from "./authField";
 import { useDispatch } from "react-redux";
-import { test } from "../../redux/action";
+import { loginAction, registrAction } from "../../redux/action";
 
 type Props = {
   name: string,
@@ -17,8 +17,8 @@ const AuthContainer = ({ name }: Props): Node => {
 
   const submitFunc = (event) => {
     event.preventDefault();
-
-    dispatch(test(user));
+    name === "SignIn" && dispatch(loginAction(user));
+    name === "SignUp" && dispatch(registrAction(user));
   };
 
   const [user, setUser] = useState({

@@ -1,9 +1,12 @@
 import React from "react";
+// import { useDispatch } from "react-redux";
 import { List, ListItem, ListItemButton } from "@mui/material/";
 import { useHistory } from "react-router-dom";
+// import { logOut } from "../redux/action";
 
 const Header = () => {
   const history = useHistory();
+  // const dispatch = useDispatch();
   const dashboardLink = () => {
     history.push("/");
   };
@@ -13,6 +16,11 @@ const Header = () => {
   };
   const loginLink = () => {
     history.push(`/login`);
+  };
+
+  const logoutFunc = () => {
+    localStorage.removeItem("token");
+    // dispatch(logOut());
   };
 
   return (
@@ -30,6 +38,9 @@ const Header = () => {
       </ListItem>
       <ListItem>
         <ListItemButton onClick={registerLink}>SignUp</ListItemButton>
+      </ListItem>
+      <ListItem>
+        <ListItemButton onClick={logoutFunc}>LogOut</ListItemButton>
       </ListItem>
     </List>
   );
