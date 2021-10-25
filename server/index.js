@@ -2,12 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-app.use(express.json());
-app.use(cors());
-require("./src/routes")(app);
-
+const router = express.Router();
 const dotenv = require("dotenv");
 dotenv.config();
+
+app.use(express.json());
+app.use(cors());
+const routes = require("./src/routes");
+app.use("/api", routes);
 
 connectDb()
   .then(() => console.log(`mongoose connect ${process.env.PORT}`))

@@ -2,11 +2,7 @@ import React from "react";
 import AuthField from "../../component/auth";
 
 const SignUp = () => {
-  return (
-    <div>
-      <AuthField name="SignUp" />
-    </div>
-  );
+  return <AuthField name="SignUp" />;
 };
 
 export default SignUp;

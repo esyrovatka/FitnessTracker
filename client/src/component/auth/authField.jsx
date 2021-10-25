@@ -8,8 +8,8 @@ import {
   Typography,
   Avatar,
   TextField,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
   Button,
   Link,
 } from "@mui/material/";
@@ -21,6 +21,8 @@ type Props = {
   user: Object,
   helpLink: Function,
   type: string,
+  disableForm: boolean,
+  errorMessage: number,
 };
 
 const AuthField = ({
@@ -29,12 +31,14 @@ const AuthField = ({
   user,
   helpLink,
   type,
+  disableForm,
+  errorMessage,
 }: Props): Node => {
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 25,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -71,14 +75,26 @@ const AuthField = ({
           onChange={handleChange}
           value={user.password}
         />
-        <FormControlLabel
+
+        {errorMessage === 401 && (
+          <Typography component="p" sx={{ color: "red" }}>
+            Email or Password in not correct
+          </Typography>
+        )}
+        {errorMessage === 406 && (
+          <Typography component="p" sx={{ color: "red" }}>
+            Email is already in use
+          </Typography>
+        )}
+        {/* <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
-        />
+        /> */}
         <Button
           type="submit"
           fullWidth
           variant="contained"
+          disabled={disableForm}
           sx={{ mt: 3, mb: 2 }}>
           {type}
         </Button>
