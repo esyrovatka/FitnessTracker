@@ -1,10 +1,23 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { currentUser } from "../../redux/selectors.js";
+import { getAllExercise } from "../../redux/action";
 const Dashboard = () => {
   const currUser = useSelector(currentUser);
-  return currUser ? <div>Dashboard</div> : <Redirect to="/login" />;
+  const dispatch = useDispatch();
+
+  const getExercise = () => {
+    dispatch(getAllExercise());
+  };
+  return currUser ? (
+    <div>
+      <h1>Dashboard</h1>
+      <button onClick={getExercise}>Click and get exercise</button>
+    </div>
+  ) : (
+    <Redirect to="/login" />
+  );
 };
 
 export default Dashboard;

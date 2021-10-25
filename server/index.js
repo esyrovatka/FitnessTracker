@@ -8,8 +8,11 @@ dotenv.config();
 
 app.use(express.json());
 app.use(cors());
-const routes = require("./src/routes");
-app.use("/api", routes);
+
+const authRoutes = require("./src/routes/authRouter");
+const exerciseRouter = require("./src/routes/exerciseRouter");
+app.use("/api", authRoutes);
+app.use("/api", exerciseRouter);
 
 connectDb()
   .then(() => console.log(`mongoose connect ${process.env.PORT}`))

@@ -3,6 +3,7 @@ import {
   GET_CURR_USER,
   DELETE_CURR_USER,
   SET_USER_ERROR,
+  GET_ALL_EXERCISE,
 } from "../constants.js";
 
 export const registrAction = (user) => async (dispatch) => {
@@ -52,4 +53,24 @@ export const loginAction = (user) => async (dispatch) => {
 export const logOut = () => {
   localStorage.removeItem("token");
   return { type: DELETE_CURR_USER };
+};
+
+export const getAllExercise = () => async (dispatch) => {
+  const token = localStorage.token;
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/exercise`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    console.log(response.data);
+    dispatch({
+      type: GET_ALL_EXERCISE,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
