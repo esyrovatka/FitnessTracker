@@ -34,7 +34,35 @@ const createExecrises = async (req, res) => {
   }
 };
 
+const updateExecrises = async (req, res) => {
+  try {
+    for (let i = 0; i < req.body.length; i++) {
+      await Exercise.findOneAndUpdate(
+        { _id: req.body[i]._id },
+        { name: req.body[i].name, type: req.body[i].type }
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteExecrises = async (req, res) => {
+  try {
+    console.log("3req", req.body);
+
+    const { id } = req.body;
+    const result = await Exercise.findByIdAndRemove({ _id: id });
+    console.log("Exercise delete");
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getExecrises,
   createExecrises,
+  updateExecrises,
+  deleteExecrises,
 };

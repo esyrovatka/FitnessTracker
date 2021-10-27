@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import AuthField from "./authField";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, registrAction } from "../../redux/action";
-import { currentUserError, currentUser } from "../../redux/selectors.js";
+import { currentUserError, isAuthorized } from "../../redux/selectors.js";
 
 type Props = {
   name: string,
@@ -16,7 +16,8 @@ const AuthContainer = ({ name }: Props): Node => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currUserError = useSelector(currentUserError);
-  const currUser = useSelector(currentUser);
+
+  const isAuth = useSelector(isAuthorized);
 
   const submitFunc = async (event) => {
     event.preventDefault();
@@ -60,9 +61,9 @@ const AuthContainer = ({ name }: Props): Node => {
   }, [emailValid, passwordValid, history]);
 
   useEffect(() => {
-    currUser && submitLink();
+    isAuth && submitLink();
     // currUserError && setUser({ ...user, password: "" });
-  }, [currUser, submitLink, currUserError]);
+  }, [isAuth, submitLink, currUserError]);
 
   return (
     <AuthField

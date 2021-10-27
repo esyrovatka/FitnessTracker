@@ -1,85 +1,58 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { List, Typography } from "@mui/material/";
-import { useHistory } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  SpeedDial,
+  SpeedDialAction,
+  Avatar,
+} from "@mui/material/";
+
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useDispatch } from "react-redux";
 import { logOut } from "../redux/action";
-import { currentUser } from "../redux/selectors.js";
-import HeaderLink from "./HeaderLink";
+import { useHistory } from "react-router-dom";
 
-const Header = () => {
-  const history = useHistory();
-  const curUser = useSelector(currentUser);
+const actions = [{ icon: <LogoutIcon />, name: "LogOut" }];
+
+const Header = ({ name }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const dashboardLink = () => {
-    history.push("/");
-  };
-
-  const exerciseLink = () => {
-    history.push("/exercise");
-  };
-
-  const exerciseEditLink = () => {
-    history.push("/exercise/edit");
-  };
-
-  const workoutLink = () => {
-    history.push("/workout");
-  };
-
-  const workoutEditLink = () => {
-    history.push("/workout/edit");
-  };
-
-  const registerLink = () => {
-    history.push(`/registr`);
-  };
-  const loginLink = () => {
-    history.push(`/login`);
-  };
-
-  const logoutFunc = () => {
+  const handleClick = (event) => {
+    console.log(actions.name);
     dispatch(logOut());
     history.push(`/login`);
   };
 
   return (
-    <List
+    <Box
       sx={{
+        color: "purple",
         display: "flex",
-        flexDirection: "column",
-        bgcolor: "#a87ee0",
-        minWidth: 250,
-        textAlign: "center",
+        padding: "0 10%",
+        height: 50,
+        alignItems: "center",
       }}>
-      <Typography
-        component="h1"
-        variant="h5"
-        gutterBottom
-        sx={{
-          color: "#f4f4f4",
-          padding: 5,
-          borderBottom: "2px solid grey",
-          margin: 5,
-        }}>
-        Fit Trainer
+      <Typography variant="h4" component="div" gutterBottom>
+        {name}
       </Typography>
-      {curUser ? (
-        <>
-          <HeaderLink clickHandler={dashboardLink} name="Dashboard" />
-          <HeaderLink clickHandler={exerciseLink} name="New Exercise" />
-          <HeaderLink clickHandler={exerciseEditLink} name="Edit Exercise" />
-          <HeaderLink clickHandler={workoutLink} name="New Workout" />
-          <HeaderLink clickHandler={workoutEditLink} name="Edit Workout" />
-          <HeaderLink clickHandler={logoutFunc} name="LogOut" />
-        </>
-      ) : (
-        <>
-          <HeaderLink clickHandler={loginLink} name="SignIn" />
-          <HeaderLink clickHandler={registerLink} name="SignUp" />
-        </>
-      )}
-    </List>
+
+      <Box sx={{ height: 20, transform: "translate(0px)", flexGrow: 1 }}>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          direction="left"
+          icon={<Avatar />}>
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={handleClick}
+            />
+          ))}
+        </SpeedDial>
+      </Box>
+    </Box>
   );
 };
 

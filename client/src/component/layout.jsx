@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "./Header.jsx";
+import NavPanel from "./NavPanel.jsx";
 import { Box } from "@mui/material/";
 const Layout = ({ children }) => {
   return (
     <Box sx={{ display: "flex", height: "98vh" }}>
-      <Header />
+      <NavPanel />
       {children}
     </Box>
   );

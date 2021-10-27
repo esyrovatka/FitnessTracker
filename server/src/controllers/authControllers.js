@@ -12,7 +12,7 @@ const registr = async (req, res) => {
     } else {
       const user = new User({ email, password });
       await user.save();
-      token = jwt.sign({ userId: user._id }, secret, { expiresIn: "1800s" });
+      token = jwt.sign({ userId: user._id }, secret, { expiresIn: "18000s" });
       res.status(201).json(token);
     }
   } catch (err) {
@@ -25,7 +25,9 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.find({ email, password });
     if (user.length) {
-      token = jwt.sign({ userId: user[0]._id }, secret, { expiresIn: "1800s" });
+      token = jwt.sign({ userId: user[0]._id }, secret, {
+        expiresIn: "18000s",
+      });
       res.status(200).json(token);
     } else {
       res.status(401).json("not found user with this email and password");
