@@ -29,6 +29,7 @@ const createExecrises = async (req, res) => {
     const exercise = new Exercise({ name, type, userId: decoded.userId });
     await exercise.save();
     console.log("Exercise create");
+    res.status(200).json(exercise);
   } catch (err) {
     console.log(err);
   }
@@ -36,12 +37,14 @@ const createExecrises = async (req, res) => {
 
 const updateExecrises = async (req, res) => {
   try {
+    console.log(req.body);
     for (let i = 0; i < req.body.length; i++) {
-      await Exercise.findOneAndUpdate(
+      const result = await Exercise.findOneAndUpdate(
         { _id: req.body[i]._id },
         { name: req.body[i].name, type: req.body[i].type }
       );
     }
+    res.status(200);
   } catch (err) {
     console.log(err);
   }

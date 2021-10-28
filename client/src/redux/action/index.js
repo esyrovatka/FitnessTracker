@@ -85,7 +85,9 @@ export const createNewExercise = (exercise) => async () => {
         },
       }
     );
-    console.log(response.data);
+    const order = JSON.parse(localStorage.Exercise_Order);
+    order.push(response.data._id);
+    localStorage.setItem("Exercise_Order", JSON.stringify(order));
   } catch (err) {
     console.log(err);
   }
@@ -94,8 +96,7 @@ export const createNewExercise = (exercise) => async () => {
 export const updExercise = (exercise) => async (dispath) => {
   const token = localStorage.token;
   try {
-    console.log("123", exercise);
-    const response = await axios.put(
+    await axios.put(
       `${process.env.REACT_APP_BASE_URL}/exercise/update`,
       exercise,
       {
@@ -108,7 +109,6 @@ export const updExercise = (exercise) => async (dispath) => {
       type: UPDATE_EXERCISE,
       payload: exercise,
     });
-    console.log(response.data);
   } catch (err) {
     console.log(err);
   }
@@ -116,7 +116,6 @@ export const updExercise = (exercise) => async (dispath) => {
 
 export const delExercise = (id) => async (dispatch) => {
   const token = localStorage.token;
-  console.log("2", id);
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/exercise/delete`,
@@ -127,7 +126,11 @@ export const delExercise = (id) => async (dispatch) => {
         },
       }
     );
-    console.log("pypypypy", response.data);
+
+    const order = JSON.parse(localStorage.Exercise_Order);
+    const result = order.filter((item) => item !== id);
+    localStorage.setItem("Exercise_Order", JSON.stringify(result));
+
     dispatch({
       type: DELETE_EXERCISE,
       payload: response.data,

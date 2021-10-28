@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const router = express.Router();
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -11,8 +10,10 @@ app.use(cors());
 
 const authRoutes = require("./src/routes/authRouter");
 const exerciseRouter = require("./src/routes/exerciseRouter");
+const workoutRouter = require("./src/routes/workoutRouter");
 app.use("/api", authRoutes);
 app.use("/api", exerciseRouter);
+app.use("/api", workoutRouter);
 
 connectDb()
   .then(() => console.log(`mongoose connect ${process.env.PORT}`))
