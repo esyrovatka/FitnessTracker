@@ -7,7 +7,17 @@ import {
   SET_EXERCISE_LOADING,
   DELETE_EXERCISE,
   UPDATE_EXERCISE,
+  SET_WORKOUT_LOADING,
+  GET_ALL_WORKOUT,
+  GET_CURRENT_DATA,
 } from "../constants.js";
+
+export const getCurrData = (currData) => (dispatch) => {
+  dispatch({
+    type: GET_CURRENT_DATA,
+    payload: currData,
+  });
+};
 
 export const registrAction = (user) => async (dispatch) => {
   try {
@@ -135,6 +145,79 @@ export const delExercise = (id) => async (dispatch) => {
       type: DELETE_EXERCISE,
       payload: response.data,
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAllWorkout = () => async (dispatch) => {
+  dispatch({
+    type: SET_WORKOUT_LOADING,
+  });
+  const token = localStorage.token;
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/workout`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+
+    dispatch({
+      type: GET_ALL_WORKOUT,
+      payload: response.data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const createWorkout = (workout) => async () => {
+  const token = localStorage.token;
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/workout`,
+      workout,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateWorkout = (workout) => async () => {
+  const token = localStorage.token;
+  try {
+    await axios.put(`${process.env.REACT_APP_BASE_URL}/workout/edit`, workout, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const delWorkout = (workout) => async () => {
+  const token = localStorage.token;
+  try {
+    await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/workout/delete`,
+      workout,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
   } catch (err) {
     console.log(err);
   }

@@ -9,7 +9,7 @@ const workoutSchema = new Schema({
       measurement: Number,
     },
   ],
-  data: Number,
+  data: Object,
   userId: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 

@@ -24,21 +24,52 @@ const createWorkout = async (req, res) => {
   }
 };
 
-// const getWorkout = async (req, res) => {
-//   try {
-//     const token = req.headers.authorization.split(" ")[1];
-//     const decoded = jwt.verify(token, secret);
-//     const findWorkout = await Workout.find({ userId: decoded.userId });
+const editWorkout = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secret);
 
-//     if (findWorkout.length) {
-//       res.status(200).json(findWorkout);
-//     } else {
-//       console.log("Workout  not find");
-//       res.status(401).json("Havn't Workout");
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+    const { _id, exerciseList } = req.body;
+    console.log(exerciseList);
+    await Workout.findOneAndUpdate({ _id }, { exerciseList });
 
-module.exports = { createWorkout };
+    console.log("Workout edit");
+    res.status(200);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getWorkout = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secret);
+    const workout = await Workout.find({ userId: decoded.userId });
+
+    if (workout.length) {
+      res.status(200).json(workout);
+    } else {
+      console.log("Workout  not find");
+      res.status(401).json("Havn't Workout");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteWorkout = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secret);
+    console.log("Workout id:vkjhvkv", req.body);
+    const { _id } = req.body;
+
+    const result = await Workout.findByIdAndRemove({ _id });
+    console.log("Workout delete");
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { createWorkout, getWorkout, editWorkout, deleteWorkout };
