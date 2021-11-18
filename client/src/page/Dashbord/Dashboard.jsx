@@ -46,7 +46,8 @@ const Dashboard = () => {
   }, [currWorkoutDate, allWorkout]);
 
   useEffect(() => {
-    const filterData = allWorkout.map((item) => new Date(item.data));
+    const filterData =
+      allWorkout && allWorkout.map((item) => new Date(item.data));
     setWorkoutData(filterData);
   }, [allWorkout]);
 

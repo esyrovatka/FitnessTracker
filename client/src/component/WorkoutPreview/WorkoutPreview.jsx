@@ -10,7 +10,7 @@ const WorkoutPreview = ({ exercise, index }) => {
     (item) => item._id === exercise.exerciseId
   );
 
-  return (
+  return currExercise ? (
     <Card sx={{ minWidth: 275, margin: 1 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -26,6 +26,10 @@ const WorkoutPreview = ({ exercise, index }) => {
           Repeats: {exercise.repeats}
         </Typography>
       </CardContent>
+    </Card>
+  ) : (
+    <Card sx={{ minWidth: 275, margin: 1 }}>
+      <CardContent> </CardContent>
     </Card>
   );
 };

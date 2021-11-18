@@ -45,13 +45,12 @@ const getWorkout = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, secret);
     const workout = await Workout.find({ userId: decoded.userId });
-
-    if (workout.length) {
-      res.status(200).json(workout);
-    } else {
-      console.log("Workout  not find");
-      res.status(401).json("Havn't Workout");
-    }
+    res.status(200).json(workout);
+    // if (workout.length) {
+    //   res.status(200).json(workout);
+    // } else {
+    //   res.status(404).json("Havn't Workout");
+    // }
   } catch (err) {
     console.log(err);
   }

@@ -1,10 +1,14 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import CreateFormContainer from "../../component/createForm";
 import { Box } from "@mui/material/";
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
+import { useSelector } from "react-redux";
+import { isAuthorized } from "../../redux/selectors";
 const NewExercise = () => {
-  return (
+  const isAuth = useSelector(isAuthorized);
+  return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <Header name="New Exercise" />
       <Box
@@ -19,6 +23,8 @@ const NewExercise = () => {
       </Box>
       <Footer />
     </Box>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 

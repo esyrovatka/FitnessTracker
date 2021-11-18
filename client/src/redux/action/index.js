@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "../store";
 import {
   IS_AUTHORIZED,
   IS_LOGOUT,
@@ -11,6 +12,18 @@ import {
   GET_ALL_WORKOUT,
   GET_CURRENT_DATA,
 } from "../constants.js";
+
+const UNAUTHORIZED = 401;
+const { dispatch } = store;
+
+axios.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    const { status } = err.response;
+    status === UNAUTHORIZED && dispatch(logOut());
+    return Promise.reject(err);
+  }
+);
 
 export const getCurrData = (currData) => (dispatch) => {
   dispatch({
@@ -79,11 +92,17 @@ export const getAllExercise = () => async (dispatch) => {
       payload: response.data,
     });
   } catch (err) {
+    // if (err.response.status === 401) {
+    // localStorage.removeItem("token");
+    // dispatch({
+    //   type: IS_LOGOUT,
+    // });
+    // } else {
     console.log(err);
   }
 };
 
-export const createNewExercise = (exercise) => async () => {
+export const createNewExercise = (exercise) => async (dispatch) => {
   const token = localStorage.token;
   try {
     const response = await axios.post(
@@ -103,7 +122,7 @@ export const createNewExercise = (exercise) => async () => {
   }
 };
 
-export const updExercise = (exercise) => async (dispath) => {
+export const updExercise = (exercise) => async (dispatch) => {
   const token = localStorage.token;
   try {
     await axios.put(
@@ -115,12 +134,19 @@ export const updExercise = (exercise) => async (dispath) => {
         },
       }
     );
-    dispath({
+    dispatch({
       type: UPDATE_EXERCISE,
       payload: exercise,
     });
   } catch (err) {
-    console.log(err);
+    if (err.response && err.response.status === 401) {
+      localStorage.removeItem("token");
+      dispatch({
+        type: IS_LOGOUT,
+      });
+    } else {
+      console.log(err);
+    }
   }
 };
 

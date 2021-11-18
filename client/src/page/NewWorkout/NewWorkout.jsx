@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { exerciseList, exerciseIsLoad } from "../../redux/selectors";
+import { exerciseList, exerciseIsLoad, currData } from "../../redux/selectors";
 import { Box, Button } from "@mui/material/";
 import { createWorkout, getAllExercise } from "../../redux/action";
 import Header from "../../component/Header";
@@ -26,9 +26,10 @@ const NewWorkout = () => {
 
   const allExercise = useSelector(exerciseList);
   const isLoad = useSelector(exerciseIsLoad);
+  const currentData = useSelector(currData);
 
   const [workout, setWorkout] = useState({
-    data: new Date(),
+    data: currentData,
     exerciseList: [],
   });
 
@@ -52,8 +53,6 @@ const NewWorkout = () => {
   };
 
   const changeExercise = (exercise) => {
-    console.log(exercise, "pypyp");
-    console.log(workout, "workout");
     const newArray = [...workout.exerciseList];
     const result = newArray.find((elem) => elem.id === exercise.id);
     result.repeats !== exercise.repeats && (result.repeats = exercise.repeats);

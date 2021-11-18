@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PickersDay from "@mui/lab/PickersDay";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -9,6 +9,10 @@ import { getCurrData } from "../../redux/action";
 const CalendarComponent = ({ workoutData }) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(new Date());
+
+  useEffect(() => {
+    dispatch(getCurrData(new Date()));
+  }, [dispatch]);
 
   const changeData = (newValue) => {
     setValue(newValue);

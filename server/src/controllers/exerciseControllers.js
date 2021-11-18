@@ -8,13 +8,13 @@ const getExecrises = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, secret);
     const findExercise = await Exercise.find({ userId: decoded.userId });
-
-    if (findExercise.length) {
-      res.status(200).json(findExercise);
-    } else {
-      console.log("Exercise  not find");
-      res.status(401).json("Havn't exercise");
-    }
+    res.status(200).json(findExercise);
+    // if (findExercise.length) {
+    //   res.status(200).json(findExercise);
+    // } else {
+    //   console.log("Exercise  not find");
+    //   res.status(404).json("Havn't exercise");
+    // }
   } catch (err) {
     console.log(err);
   }
