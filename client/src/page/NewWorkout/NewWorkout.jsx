@@ -27,7 +27,7 @@ const NewWorkout = () => {
   const allExercise = useSelector(exerciseList);
   const isLoad = useSelector(exerciseIsLoad);
   const currentData = useSelector(currData);
-
+  console.log("allExercise", allExercise);
   const [workout, setWorkout] = useState({
     data: currentData,
     exerciseList: [],
@@ -70,7 +70,7 @@ const NewWorkout = () => {
 
   return (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
-      <Header name="Create Exercise" />
+      <Header name="Create Workout" />
       {isLoad ? (
         <Loader />
       ) : (

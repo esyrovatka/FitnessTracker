@@ -69,6 +69,7 @@ export const loginAction = (user) => async (dispatch) => {
 
 export const logOut = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("Exercise_Order");
   return { type: IS_LOGOUT };
 };
 
@@ -86,18 +87,11 @@ export const getAllExercise = () => async (dispatch) => {
         },
       }
     );
-    // console.log(response.data);
     dispatch({
       type: GET_ALL_EXERCISE,
       payload: response.data,
     });
   } catch (err) {
-    // if (err.response.status === 401) {
-    // localStorage.removeItem("token");
-    // dispatch({
-    //   type: IS_LOGOUT,
-    // });
-    // } else {
     console.log(err);
   }
 };
@@ -114,9 +108,11 @@ export const createNewExercise = (exercise) => async (dispatch) => {
         },
       }
     );
-    const order = JSON.parse(localStorage.Exercise_Order);
-    order.push(response.data._id);
-    localStorage.setItem("Exercise_Order", JSON.stringify(order));
+    if (localStorage.Exercise_Order) {
+      const order = JSON.parse(localStorage.Exercise_Order);
+      order.push(response.data._id);
+      localStorage.setItem("Exercise_Order", JSON.stringify(order));
+    }
   } catch (err) {
     console.log(err);
   }
@@ -162,17 +158,18 @@ export const delExercise = (id) => async (dispatch) => {
         },
       }
     );
-
-    const order = JSON.parse(localStorage.Exercise_Order);
-    const result = order.filter((item) => item !== id);
-    localStorage.setItem("Exercise_Order", JSON.stringify(result));
+    if (localStorage.Exercise_Order) {
+      const order = JSON.parse(localStorage.Exercise_Order);
+      const result = order.filter((item) => item !== id);
+      localStorage.setItem("Exercise_Order", JSON.stringify(result));
+    }
 
     dispatch({
       type: DELETE_EXERCISE,
       payload: response.data,
     });
   } catch (err) {
-    console.log(err);
+    console.log("error", err);
   }
 };
 

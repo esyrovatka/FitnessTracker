@@ -63,7 +63,7 @@ const Dashboard = () => {
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <Header name="Dashboard" />
       <Box sx={style}>
-        <CalendarComponent workoutData={workoutData} />
+        <CalendarComponent workoutData={workoutData} sx={{ width: "50%" }} />
         <Box>
           {currWorkout && (
             <Typography variant="h3" gutterBottom component="div">

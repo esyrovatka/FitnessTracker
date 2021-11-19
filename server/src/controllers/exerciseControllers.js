@@ -52,8 +52,6 @@ const updateExecrises = async (req, res) => {
 
 const deleteExecrises = async (req, res) => {
   try {
-    console.log("3req", req.body);
-
     const { id } = req.body;
     const result = await Exercise.findByIdAndRemove({ _id: id });
     console.log("Exercise delete");

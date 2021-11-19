@@ -18,7 +18,6 @@ const EditExerciseComponent = ({ list, updList, deleteExercise, sort }) => {
       (result.type = exercise.type) &&
       updList(newArray);
   };
-
   useEffect(() => {
     updList(list);
   }, [list, updList]);
