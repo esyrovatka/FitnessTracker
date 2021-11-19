@@ -7,6 +7,7 @@ import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
 import CreateWorkout from "../../component/createWorkout";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const NewWorkout = () => {
   const style = {
@@ -19,6 +20,7 @@ const NewWorkout = () => {
 
   const butStyle = { mt: 3, mb: 2, width: 180 };
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getAllExercise());
@@ -27,7 +29,7 @@ const NewWorkout = () => {
   const allExercise = useSelector(exerciseList);
   const isLoad = useSelector(exerciseIsLoad);
   const currentData = useSelector(currData);
-  console.log("allExercise", allExercise);
+
   const [workout, setWorkout] = useState({
     data: currentData,
     exerciseList: [],
@@ -35,21 +37,24 @@ const NewWorkout = () => {
 
   const addExercise = () => {
     const keyData = new Date().getTime();
+    if (allExercise[0]) {
+      const updateWorkout = {
+        ...workout,
+        exerciseList: [
+          ...workout.exerciseList,
+          {
+            repeats: 1,
+            measurement: 1,
+            exerciseId: allExercise[0]._id,
+            id: keyData,
+          },
+        ],
+      };
 
-    const updateWorkout = {
-      ...workout,
-      exerciseList: [
-        ...workout.exerciseList,
-        {
-          repeats: 0,
-          measurement: 0,
-          exerciseId: allExercise[0]._id,
-          id: keyData,
-        },
-      ],
-    };
-
-    setWorkout(updateWorkout);
+      setWorkout(updateWorkout);
+    } else {
+      history.push("/exercise");
+    }
   };
 
   const changeExercise = (exercise) => {
@@ -65,7 +70,28 @@ const NewWorkout = () => {
   };
 
   const createNewWorkout = () => {
-    dispatch(createWorkout(workout));
+    const res = workout.exerciseList.filter(
+      (item) => Number(item.repeats) === 0
+    );
+    console.log(res, "res");
+    if (res.length) {
+      alert("not correct");
+    } else {
+      dispatch(createWorkout(workout));
+      history.push("/");
+    }
+  };
+
+  const deleteExercise = (currExer) => {
+    const newList = workout.exerciseList.filter(
+      (item) => item.id !== currExer.id
+    );
+    const updateWorkout = {
+      ...workout,
+      exerciseList: newList,
+    };
+
+    setWorkout(updateWorkout);
   };
 
   return (
@@ -80,12 +106,17 @@ const NewWorkout = () => {
           </Button>
 
           {workout.exerciseList.length ? (
-            workout.exerciseList.map((item) => (
+            workout.exerciseList.map((item, index) => (
               <CreateWorkout
                 key={item.id}
                 exercise={item}
                 allExer={allExercise}
                 changeExercise={changeExercise}
+                index={index}
+                exerciseList={workout.exerciseList}
+                setWorkout={setWorkout}
+                workout={workout}
+                deleteExercise={deleteExercise}
               />
             ))
           ) : (

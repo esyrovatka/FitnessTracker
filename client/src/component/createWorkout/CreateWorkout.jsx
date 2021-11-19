@@ -4,11 +4,21 @@ import {
   TextField,
   Typography,
   FormControl,
+  Button,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import ButtonList from "../EditExerciseComponent/ButtonList";
 
-const CreateWorkout = ({ exercise, allExer, changeExercise }) => {
+const CreateWorkout = ({
+  exercise,
+  allExer,
+  changeExercise,
+  index,
+  setWorkout,
+  workout,
+  deleteExercise,
+}) => {
   const textFieldStyle = {
     width: 150,
     padding: "0px 10px",
@@ -35,6 +45,22 @@ const CreateWorkout = ({ exercise, allExer, changeExercise }) => {
   useEffect(() => {
     changeExercise(currExer);
   }, [changeExercise, currExer]);
+
+  const sort = (index, type) => {
+    const newArr = [...workout.exerciseList];
+    type === "Up" &&
+      ([newArr[index], newArr[index - 1]] = [newArr[index - 1], newArr[index]]);
+
+    type === "Down" &&
+      ([newArr[index], newArr[index + 1]] = [newArr[index + 1], newArr[index]]);
+
+    const updateWorkout = {
+      ...workout,
+      exerciseList: newArr,
+    };
+
+    setWorkout(updateWorkout);
+  };
 
   const currExercise = allExer.find((item) => item._id === currExer.exerciseId);
   return (
@@ -69,6 +95,12 @@ const CreateWorkout = ({ exercise, allExer, changeExercise }) => {
         label="measurement"
         onChange={handleChange}
       />
+
+      <ButtonList index={index} list={workout.exerciseList} sort={sort} />
+
+      <Button variant="contained" onClick={() => deleteExercise(currExer)}>
+        Delete
+      </Button>
 
       <Typography sx={textFieldStyle}>{currExercise.type}</Typography>
     </FormControl>

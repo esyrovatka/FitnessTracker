@@ -78,7 +78,7 @@ const AuthField = ({
 
         {errorMessage === 401 && (
           <Typography component="p" sx={{ color: "red" }}>
-            Email or Password in not correct
+            Email or Password is not correct
           </Typography>
         )}
         {errorMessage === 406 && (

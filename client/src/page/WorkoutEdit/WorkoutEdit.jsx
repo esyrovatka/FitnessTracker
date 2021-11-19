@@ -56,6 +56,18 @@ const WorkoutEdit = () => {
     dispatch(delWorkout(currWorkout));
   };
 
+  const deleteExercise = (currExer) => {
+    const newList = currWorkout.exerciseList.filter(
+      (item) => item._id !== currExer._id
+    );
+    const updateWorkout = {
+      ...currWorkout,
+      exerciseList: newList,
+    };
+
+    setCurrWorkout(updateWorkout);
+  };
+
   return (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <Header name="Edit Workout" />
@@ -71,13 +83,18 @@ const WorkoutEdit = () => {
           Workout at: {currWorkoutDate.getDate()}.{currWorkoutDate.getMonth()}.
           {currWorkoutDate.getYear() + 1900}
         </Typography>
+
         {currWorkout &&
-          currWorkout.exerciseList.map((item) => (
+          currWorkout.exerciseList.map((item, index) => (
             <CreateWorkout
               key={item._id}
+              index={index}
               exercise={item}
               allExer={allExercise}
               changeExercise={changeExercise}
+              workout={currWorkout}
+              setWorkout={setCurrWorkout}
+              deleteExercise={deleteExercise}
             />
           ))}
         <Box>
