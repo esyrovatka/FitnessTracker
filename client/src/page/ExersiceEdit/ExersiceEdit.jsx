@@ -13,6 +13,7 @@ import Header from "../../component/Header";
 import ModalComponent from "../../component/ModalComponent";
 import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
+import СonfirmationModal from "../../component/СonfirmationModal";
 
 const ExersiceEdit = () => {
   const style = {
@@ -22,6 +23,7 @@ const ExersiceEdit = () => {
     alignItems: "center",
     height: "60vh",
   };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,7 +35,12 @@ const ExersiceEdit = () => {
   const allWorkout = useSelector(workout);
   const isLoad = useSelector(exerciseIsLoad);
   const [updateList, setUpdateList] = useState(allExercise);
+  const [currExerciseId, setCurrExerciseId] = useState(); // for СonfirmationModal
   const [open, setOpen] = useState(false);
+
+  const [openСonfirmationModal, setOpenСonfirmationModal] = useState(false);
+  const handleClose = () => setOpenСonfirmationModal(false);
+
   const order = localStorage.Exercise_Order;
   const orderFilter = useCallback(() => {
     const result = JSON.parse(order);
@@ -66,33 +73,18 @@ const ExersiceEdit = () => {
     localStorage.setItem("Exercise_Order", JSON.stringify(newArr));
     modalOpen();
   };
-  let dataexercise = [];
+
   const deleteExercise = (id) => {
+    setCurrExerciseId(id);
+    openСonfirmationModal && dispatch(delExercise(id));
+
     const result = allWorkout.map((item) =>
       item.exerciseList.filter((exerciseList) => exerciseList.exerciseId === id)
     );
-    for (let i = 0; i < result.length; i++) {
-      if (result[i].length) {
-        dataexercise.push(
-          "\u00A0" +
-            "\u00A0" +
-            new Date(allWorkout[i].data).getDate() +
-            "/" +
-            new Date(allWorkout[i].data).getMonth() +
-            "/" +
-            (new Date(allWorkout[i].data).getYear() + 1900)
-        );
-      }
-    }
-    if (dataexercise.length) {
-      const vvod =
-        "Please delete this exercise from workout at: " + dataexercise;
-      alert(vvod);
-      dataexercise = [];
+    if (result.flat().length) {
+      setOpenСonfirmationModal(true);
     } else {
-      dataexercise = [];
       dispatch(delExercise(id));
-      modalOpen();
     }
   };
 
@@ -110,6 +102,14 @@ const ExersiceEdit = () => {
   return (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <ModalComponent openModal={open} name="Exercise Update!" />
+
+      <СonfirmationModal
+        open={openСonfirmationModal}
+        handleClose={handleClose}
+        deleteExercise={deleteExercise}
+        id={currExerciseId}
+      />
+
       <Header name="Edit Exercise" />
       {isLoad ? (
         <Loader />

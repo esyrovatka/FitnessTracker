@@ -71,7 +71,7 @@ const NewWorkout = () => {
 
   const createNewWorkout = () => {
     const res = workout.exerciseList.filter(
-      (item) => Number(item.repeats) === 0
+      (item) => Number(item.repeats) === 0 || Number(item.measurement) === 0
     );
     console.log(res, "res");
     if (res.length) {

@@ -3,7 +3,8 @@ const jwt_decode = require("jwt-decode");
 function getTokenFromHeader(req, res, next) {
   if (
     req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Bearer"
+    req.headers.authorization.split(" ")[0] === "Bearer" &&
+    req.headers.authorization.split(" ")[1] !== "undefined"
   ) {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt_decode(token);
