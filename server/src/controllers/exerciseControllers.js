@@ -1,4 +1,5 @@
 const User = require("../models/userModel.js");
+const Workout = require("../models/workoutModel.js");
 const Exercise = require("../models/exerciseModel.js");
 const jwt = require("jsonwebtoken");
 const secret = "fitnessTracker";
@@ -52,8 +53,19 @@ const updateExecrises = async (req, res) => {
 
 const deleteExecrises = async (req, res) => {
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const { userId } = jwt.verify(token, secret);
     const { id } = req.body;
+
+    console.log(userId);
     const result = await Exercise.findByIdAndRemove({ _id: id });
+
+    const workoutResult = await Workout.updateMany(
+      { userId },
+      { $pull: { exerciseList: { exerciseId: id } } },
+      { multi: true }
+    );
+
     console.log("Exercise delete");
     res.status(200).json(result);
   } catch (err) {

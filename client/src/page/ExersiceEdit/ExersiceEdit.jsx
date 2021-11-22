@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material/";
 import { useDispatch, useSelector } from "react-redux";
 import {
   exerciseList,
@@ -6,7 +8,7 @@ import {
   workout,
   isAuthorized,
 } from "../../redux/selectors";
-import { Box, Typography, Button } from "@mui/material/";
+
 import EditExerciseComponent from "../../component/EditExerciseComponent";
 import {
   delExercise,
@@ -19,7 +21,6 @@ import ModalComponent from "../../component/ModalComponent";
 import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
 import СonfirmationModal from "../../component/СonfirmationModal";
-import { Redirect } from "react-router-dom";
 
 const ExersiceEdit = () => {
   const style = {
@@ -89,9 +90,15 @@ const ExersiceEdit = () => {
     const result = allWorkout.map((item) =>
       item.exerciseList.filter((exerciseList) => exerciseList.exerciseId === id)
     );
+
     if (result.flat().length) {
       setOpenСonfirmationModal(true);
     } else {
+      allWorkout.map((item) =>
+        item.exerciseList.filter(
+          (exerciseList) => exerciseList.exerciseId !== id
+        )
+      );
       dispatch(delExercise(id));
     }
   };

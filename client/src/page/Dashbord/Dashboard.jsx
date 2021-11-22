@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { currData, isAuthorized, workout } from "../../redux/selectors.js";
-import { getAllExercise, getAllWorkout } from "../../redux/action";
+import { delWorkout, getAllExercise, getAllWorkout } from "../../redux/action";
 import { Box, Typography, Button } from "@mui/material/";
 import Header from "../../component/Header.jsx";
 import Footer from "../../component/Footer.jsx";
@@ -46,8 +46,15 @@ const Dashboard = () => {
   }, [currWorkoutDate, allWorkout]);
 
   useEffect(() => {
+    for (let i = 0; i < allWorkout.length; i++) {
+      !allWorkout[i].exerciseList.length && dispatch(delWorkout(allWorkout[i]));
+    }
+  }, [allWorkout, dispatch]);
+
+  useEffect(() => {
     const filterData =
       allWorkout && allWorkout.map((item) => new Date(item.data));
+
     setWorkoutData(filterData);
   }, [allWorkout]);
 

@@ -10,9 +10,10 @@ import { currentUserError, isAuthorized } from "../../redux/selectors.js";
 
 type Props = {
   name: string,
+  currEmail: string,
 };
 
-const AuthContainer = ({ name }: Props): Node => {
+const AuthContainer = ({ name, currEmail }: Props): Node => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currUserError = useSelector(currentUserError);
@@ -27,7 +28,7 @@ const AuthContainer = ({ name }: Props): Node => {
 
   const [disableForm, setDisableForm] = useState(true);
   const [user, setUser] = useState({
-    email: "",
+    email: currEmail || "",
     password: "",
   });
 
@@ -57,8 +58,14 @@ const AuthContainer = ({ name }: Props): Node => {
   };
 
   const submitLink = useCallback(() => {
-    passwordValid() && emailValid() && history.push("/");
-  }, [emailValid, passwordValid, history]);
+    name === "SignIn"
+      ? passwordValid() && emailValid() && history.push("/")
+      : passwordValid() && emailValid() && history.push("/verification");
+    name === "Verification" &&
+      passwordValid() &&
+      emailValid() &&
+      history.push("/");
+  }, [emailValid, passwordValid, history, name]);
 
   useEffect(() => {
     isAuth && submitLink();
@@ -74,6 +81,7 @@ const AuthContainer = ({ name }: Props): Node => {
       type={name}
       disableForm={disableForm}
       errorMessage={currUserError}
+      verificationEmail={currEmail}
     />
   );
 };

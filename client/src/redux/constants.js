@@ -1,7 +1,9 @@
 //auth
 export const IS_AUTHORIZED = "IS_AUTHORIZED";
 export const IS_LOGOUT = "IS_LOGOUT";
+export const IS_UTHORIZED_LOADING = "IS_UTHORIZED_LOADING";
 export const SET_USER_ERROR = "SET_USER_ERROR";
+export const GET_CURRENT_DATA = "GET_CURRENT_DATA";
 
 //exercise
 export const GET_ALL_EXERCISE = "GET_ALL_EXERCISE";
@@ -16,5 +18,3 @@ export const SET_WORKOUT_LOADING = "SET_WORKOUT_LOADING";
 export const CREATE_NEW_WORKOUT = "CREATE_NEW_WORKOUT";
 export const DELETE_WORKOUT = "DELETE_WORKOUT";
 export const UPDATE_WORKOUT = "UPDATE_WORKOUT";
-
-export const GET_CURRENT_DATA = "GET_CURRENT_DATA";

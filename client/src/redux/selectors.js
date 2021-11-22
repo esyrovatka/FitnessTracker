@@ -1,4 +1,5 @@
 export const isAuthorized = (state) => state.user.isAuthorized;
+export const currUserEmail = (state) => state.user.currEmail;
 
 export const currentUserError = (state) => state.user.error;
 

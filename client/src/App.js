@@ -8,6 +8,7 @@ import ExersiceEdit from "./page/ExersiceEdit";
 import WorkoutEdit from "./page/WorkoutEdit";
 import SignIn from "./page/SignIn";
 import SignUp from "./page/SignUp";
+import VerificationEmail from "./page/VerificationEmail";
 import Layout from "./component/layout";
 
 export default function App() {
@@ -36,6 +37,9 @@ export default function App() {
           </Route>
           <Route path="/registr">
             <SignUp />
+          </Route>
+          <Route path="/verification">
+            <VerificationEmail />
           </Route>
         </Switch>
       </Layout>

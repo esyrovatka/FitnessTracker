@@ -3,10 +3,15 @@ import thunk from "redux-thunk";
 import { rootReducer } from "./reducer/rootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-  // process.env.NODE_ENV
-);
+const enhancers =
+  process.env.NODE_ENV === "production"
+    ? applyMiddleware(thunk)
+    : composeWithDevTools(applyMiddleware(thunk));
+
+const store = createStore(rootReducer, enhancers);
+
+store.dispatchExport = () => {
+  store.dispatch();
+};
 
 export default store;

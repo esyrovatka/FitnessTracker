@@ -30,9 +30,7 @@ export const workoutReducer = (
     case DELETE_WORKOUT:
       return {
         ...state,
-        exerciseList: state.workoutList.filter(
-          (item) => item._id !== payload._id
-        ),
+        workoutList: state.workoutList.filter((item) => item._id !== payload),
       };
 
     default:

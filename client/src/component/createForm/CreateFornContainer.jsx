@@ -4,12 +4,14 @@ import CreateForm from "./CreateForm";
 import { useDispatch } from "react-redux";
 import { createNewExercise } from "../../redux/action";
 import ModalComponent from "../ModalComponent";
+import { Typography } from "@mui/material";
 const CreateFormContainer = ({ name, type }) => {
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     name: "",
     type: "",
+    error: "",
   });
   const [open, setOpen] = useState(false);
 
@@ -21,13 +23,17 @@ const CreateFormContainer = ({ name, type }) => {
 
   const submitFunc = (event) => {
     event.preventDefault();
-    dispatch(createNewExercise(form));
-    setForm({ ...form, name: "", type: "" });
-    console.log(form);
-    setOpen(true);
-    setTimeout(() => {
-      setOpen(false);
-    }, 500);
+    if (form.name.length && form.type.length) {
+      dispatch(createNewExercise(form));
+      setForm({ ...form, name: "", type: "", error: "" });
+
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false);
+      }, 500);
+    } else {
+      setForm({ ...form, error: "you need to fill in all the fields" });
+    }
   };
 
   return (
@@ -40,6 +46,9 @@ const CreateFormContainer = ({ name, type }) => {
         type={type}
         submitFunc={submitFunc}
       />
+      {!!form.error.length && (
+        <Typography sx={{ color: "red" }}>{form.error}</Typography>
+      )}
     </>
   );
 };

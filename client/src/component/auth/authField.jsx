@@ -23,6 +23,7 @@ type Props = {
   type: string,
   disableForm: boolean,
   errorMessage: number,
+  verificationEmail: string,
 };
 
 const AuthField = ({
@@ -33,6 +34,7 @@ const AuthField = ({
   type,
   disableForm,
   errorMessage,
+  verificationEmail,
 }: Props): Node => {
   return (
     <Container component="main" maxWidth="xs">
@@ -62,19 +64,38 @@ const AuthField = ({
           autoFocus
           onChange={handleChange}
           value={user.email}
+          disabled={verificationEmail ? true : false}
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={handleChange}
-          value={user.password}
-        />
+        {!verificationEmail ? (
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={handleChange}
+            value={user.password}
+          />
+        ) : (
+          <>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="VerificationCode"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange}
+              value={user.password}
+            />
+            <a href="mailto:evsyrovatka@gmail.com">email me here!</a>
+          </>
+        )}
 
         {errorMessage === 401 && (
           <Typography component="p" sx={{ color: "red" }}>

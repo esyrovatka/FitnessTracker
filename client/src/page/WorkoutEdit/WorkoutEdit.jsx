@@ -64,7 +64,7 @@ const WorkoutEdit = () => {
   };
 
   const deleteWorkout = () => {
-    dispatch(delWorkout(currWorkout));
+    dispatch(delWorkout(currWorkout)) && history.push("/");
   };
 
   const deleteExercise = (currExer) => {
