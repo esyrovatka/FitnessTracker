@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { exerciseList, exerciseIsLoad, workout } from "../../redux/selectors";
+import {
+  exerciseList,
+  exerciseIsLoad,
+  workout,
+  isAuthorized,
+} from "../../redux/selectors";
 import { Box, Typography, Button } from "@mui/material/";
 import EditExerciseComponent from "../../component/EditExerciseComponent";
 import {
@@ -14,6 +19,7 @@ import ModalComponent from "../../component/ModalComponent";
 import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
 import СonfirmationModal from "../../component/СonfirmationModal";
+import { Redirect } from "react-router-dom";
 
 const ExersiceEdit = () => {
   const style = {
@@ -34,10 +40,19 @@ const ExersiceEdit = () => {
   const allExercise = useSelector(exerciseList);
   const allWorkout = useSelector(workout);
   const isLoad = useSelector(exerciseIsLoad);
+  const isAuth = useSelector(isAuthorized);
   const [updateList, setUpdateList] = useState(allExercise);
-  const [currExerciseId, setCurrExerciseId] = useState(); // for СonfirmationModal
-  const [open, setOpen] = useState(false);
 
+  // info modal
+  const [open, setOpen] = useState(false);
+  const modalOpen = () => {
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 500);
+  };
+  // for СonfirmModal
+  const [currExerciseId, setCurrExerciseId] = useState();
   const [openСonfirmationModal, setOpenСonfirmationModal] = useState(false);
   const handleClose = () => setOpenСonfirmationModal(false);
 
@@ -57,13 +72,6 @@ const ExersiceEdit = () => {
     order ? orderFilter() : setUpdateList(allExercise);
   }, [orderFilter, allExercise, order]);
 
-  const modalOpen = () => {
-    setOpen(true);
-    setTimeout(() => {
-      setOpen(false);
-    }, 500);
-  };
-
   const updateExercise = () => {
     dispatch(updExercise(updateList));
     const newArr = [];
@@ -75,7 +83,7 @@ const ExersiceEdit = () => {
   };
 
   const deleteExercise = (id) => {
-    setCurrExerciseId(id);
+    setCurrExerciseId(id); // for confirm modal
     openСonfirmationModal && dispatch(delExercise(id));
 
     const result = allWorkout.map((item) =>
@@ -99,7 +107,7 @@ const ExersiceEdit = () => {
     setUpdateList(newArr);
   };
 
-  return (
+  return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <ModalComponent openModal={open} name="Exercise Update!" />
 
@@ -136,6 +144,8 @@ const ExersiceEdit = () => {
 
       <Footer />
     </Box>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 

@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { exerciseList, exerciseIsLoad, currData } from "../../redux/selectors";
-import { Box, Button } from "@mui/material/";
+import {
+  exerciseList,
+  exerciseIsLoad,
+  currData,
+  isAuthorized,
+} from "../../redux/selectors";
+import { Box, Button, Typography } from "@mui/material/";
 import { createWorkout, getAllExercise } from "../../redux/action";
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
 import CreateWorkout from "../../component/createWorkout";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect } from "react-router-dom";
+import exerciseValidation from "../../utils/exerciseValidation";
 
 const NewWorkout = () => {
   const style = {
@@ -29,11 +36,14 @@ const NewWorkout = () => {
   const allExercise = useSelector(exerciseList);
   const isLoad = useSelector(exerciseIsLoad);
   const currentData = useSelector(currData);
+  const isAuth = useSelector(isAuthorized);
 
   const [workout, setWorkout] = useState({
     data: currentData,
     exerciseList: [],
   });
+
+  const [validWorkout, setValidWorkout] = useState(true);
 
   const addExercise = () => {
     const keyData = new Date().getTime();
@@ -70,16 +80,9 @@ const NewWorkout = () => {
   };
 
   const createNewWorkout = () => {
-    const res = workout.exerciseList.filter(
-      (item) => Number(item.repeats) === 0 || Number(item.measurement) === 0
-    );
-    console.log(res, "res");
-    if (res.length) {
-      alert("not correct");
-    } else {
-      dispatch(createWorkout(workout));
-      history.push("/");
-    }
+    exerciseValidation(workout.exerciseList)
+      ? setValidWorkout(false)
+      : dispatch(createWorkout(workout)) && history.push("/");
   };
 
   const deleteExercise = (currExer) => {
@@ -94,7 +97,7 @@ const NewWorkout = () => {
     setWorkout(updateWorkout);
   };
 
-  return (
+  return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <Header name="Create Workout" />
       {isLoad ? (
@@ -122,7 +125,11 @@ const NewWorkout = () => {
           ) : (
             <div>No Exercise</div>
           )}
-
+          {!validWorkout && (
+            <Typography sx={{ color: "red" }}>
+              please enter correct info
+            </Typography>
+          )}
           <Button variant="contained" sx={butStyle} onClick={createNewWorkout}>
             Create Workout
           </Button>
@@ -131,6 +138,8 @@ const NewWorkout = () => {
 
       <Footer />
     </Box>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 

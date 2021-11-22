@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material/";
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { currData, exerciseList, workout } from "../../redux/selectors";
+import {
+  currData,
+  exerciseList,
+  isAuthorized,
+  workout,
+} from "../../redux/selectors";
 import CreateWorkout from "../../component/createWorkout";
 import {
   delWorkout,
@@ -11,11 +17,13 @@ import {
   getAllWorkout,
   updateWorkout,
 } from "../../redux/action";
+import exerciseValidation from "../../utils/exerciseValidation";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const WorkoutEdit = () => {
   const butStyle = { m: 5, width: 180, padding: "20px" };
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
     dispatch(getAllExercise());
     dispatch(getAllWorkout());
@@ -24,8 +32,9 @@ const WorkoutEdit = () => {
   const allExercise = useSelector(exerciseList);
   const allWorkout = useSelector(workout);
   const currWorkoutDate = useSelector(currData);
+  const isAuth = useSelector(isAuthorized);
   const [currWorkout, setCurrWorkout] = useState(); // curr data workout
-
+  const [validWorkout, setValidWorkout] = useState(true);
   useEffect(() => {
     const result =
       allWorkout &&
@@ -49,7 +58,9 @@ const WorkoutEdit = () => {
   };
 
   const editWorkout = () => {
-    dispatch(updateWorkout(currWorkout));
+    exerciseValidation(currWorkout.exerciseList)
+      ? setValidWorkout(false)
+      : dispatch(updateWorkout(currWorkout)) && history.push("/");
   };
 
   const deleteWorkout = () => {
@@ -68,7 +79,7 @@ const WorkoutEdit = () => {
     setCurrWorkout(updateWorkout);
   };
 
-  return (
+  return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <Header name="Edit Workout" />
       <Box
@@ -97,6 +108,12 @@ const WorkoutEdit = () => {
               deleteExercise={deleteExercise}
             />
           ))}
+
+        {!validWorkout && (
+          <Typography sx={{ color: "red" }}>
+            please enter correct info
+          </Typography>
+        )}
         <Box>
           <Button variant="contained" sx={butStyle} onClick={editWorkout}>
             Edit Workout
@@ -109,6 +126,8 @@ const WorkoutEdit = () => {
       </Box>
       <Footer />
     </Box>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 
