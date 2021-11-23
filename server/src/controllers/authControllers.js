@@ -11,7 +11,7 @@ const registr = async (req, res) => {
       const user = new User({ email, password });
       await user.save();
       token = jwt.sign({ userId: user._id }, process.env.SERCRET_KEY, {
-        expiresIn: "18s",
+        expiresIn: "180000s",
       });
       res.status(201).json(token);
     }
@@ -26,7 +26,7 @@ const login = async (req, res) => {
     const user = await User.find({ email, password });
     if (user.length) {
       token = jwt.sign({ userId: user[0]._id }, process.env.SERCRET_KEY, {
-        expiresIn: "18s",
+        expiresIn: "180000s",
       });
       res.status(200).json(token);
     } else {

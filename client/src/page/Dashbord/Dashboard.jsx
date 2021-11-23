@@ -10,7 +10,6 @@ import {
 import { delWorkout, getAllExercise, getAllWorkout } from "../../redux/action";
 import { Box, Typography, Button } from "@mui/material/";
 import Header from "../../component/Header.jsx";
-import Footer from "../../component/Footer.jsx";
 import Loader from "../../component/Loader.jsx";
 
 import CalendarComponent from "../../component/CalendarComponent";
@@ -109,7 +108,6 @@ const Dashboard = () => {
             )}
           </Box>
         </Box>
-        <Footer />
       </Box>
     ) : (
       <Loader />

@@ -9,7 +9,6 @@ import {
 import { Box, Button, Typography } from "@mui/material/";
 import { createWorkout, getAllExercise } from "../../redux/action";
 import Header from "../../component/Header";
-import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
 import CreateWorkout from "../../component/createWorkout";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -135,8 +134,6 @@ const NewWorkout = () => {
           </Button>
         </Box>
       )}
-
-      <Footer />
     </Box>
   ) : (
     <Redirect to="/login" />

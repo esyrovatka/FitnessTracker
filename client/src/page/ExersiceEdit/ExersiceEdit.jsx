@@ -18,7 +18,6 @@ import {
 } from "../../redux/action";
 import Header from "../../component/Header";
 import ModalComponent from "../../component/ModalComponent";
-import Footer from "../../component/Footer";
 import Loader from "../../component/Loader";
 import СonfirmationModal from "../../component/СonfirmationModal";
 
@@ -148,8 +147,6 @@ const ExersiceEdit = () => {
           </Button>
         </Box>
       )}
-
-      <Footer />
     </Box>
   ) : (
     <Redirect to="/login" />

@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 import CreateFormContainer from "../../component/createForm";
 import { Box } from "@mui/material/";
 import Header from "../../component/Header";
-import Footer from "../../component/Footer";
 import { useSelector } from "react-redux";
 import { isAuthorized } from "../../redux/selectors";
 const NewExercise = () => {
@@ -21,7 +20,6 @@ const NewExercise = () => {
         }}>
         <CreateFormContainer name="Exercise" type="Measurement Type" />
       </Box>
-      <Footer />
     </Box>
   ) : (
     <Redirect to="/login" />

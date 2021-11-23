@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material/";
 import Header from "../../component/Header";
-import Footer from "../../component/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currData,
@@ -124,7 +123,6 @@ const WorkoutEdit = () => {
           </Button>
         </Box>
       </Box>
-      <Footer />
     </Box>
   ) : (
     <Redirect to="/login" />
