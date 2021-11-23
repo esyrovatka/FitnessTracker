@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button } from "@mui/material/";
 const ButtonList = ({ index, list, sort }) => {
   return (
@@ -19,5 +20,15 @@ const ButtonList = ({ index, list, sort }) => {
     </>
   );
 };
+ButtonList.defaultProps = {
+  sort: () => {},
+  list: [],
+  index: null,
+};
 
+ButtonList.propTypes = {
+  sort: PropTypes.func,
+  list: PropTypes.array,
+  index: PropTypes.number,
+};
 export default ButtonList;

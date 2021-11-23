@@ -1,9 +1,9 @@
 import {
   GET_ALL_EXERCISE,
-  IS_LOGOUT,
   SET_EXERCISE_LOADING,
   DELETE_EXERCISE,
   UPDATE_EXERCISE,
+  IS_LOGOUT,
 } from "../constants.js";
 
 const initialState = {
@@ -30,9 +30,9 @@ export const exerciseReducer = (
           (item) => item._id !== payload._id
         ),
       };
-
     case IS_LOGOUT:
       return { ...state, exerciseList: [] };
+
     default:
       return state;
   }

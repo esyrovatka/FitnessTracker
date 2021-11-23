@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import PickersDay from "@mui/lab/PickersDay";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -6,6 +8,7 @@ import StaticDatePicker from "@mui/lab/StaticDatePicker";
 import { Badge, TextField } from "@mui/material/";
 import { useDispatch } from "react-redux";
 import { getCurrData } from "../../redux/action";
+
 const CalendarComponent = ({ workoutData }) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(new Date());
@@ -48,4 +51,11 @@ const CalendarComponent = ({ workoutData }) => {
   );
 };
 
+CalendarComponent.defaultProps = {
+  workoutData: [],
+};
+
+CalendarComponent.propTypes = {
+  workoutData: PropTypes.array,
+};
 export default CalendarComponent;

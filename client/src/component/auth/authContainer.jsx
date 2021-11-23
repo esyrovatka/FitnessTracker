@@ -1,19 +1,13 @@
-// @flow
 import * as React from "react";
-import type { Node } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import PropTypes from "prop-types";
 import AuthField from "./authField";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, registrAction } from "../../redux/action";
 import { currentUserError, isAuthorized } from "../../redux/selectors.js";
 
-type Props = {
-  name: string,
-  currEmail: string,
-};
-
-const AuthContainer = ({ name, currEmail }: Props): Node => {
+const AuthContainer = ({ name, currEmail }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currUserError = useSelector(currentUserError);
@@ -58,19 +52,12 @@ const AuthContainer = ({ name, currEmail }: Props): Node => {
   };
 
   const submitLink = useCallback(() => {
-    name === "SignIn"
-      ? passwordValid() && emailValid() && history.push("/")
-      : passwordValid() && emailValid() && history.push("/verification");
-    name === "Verification" &&
-      passwordValid() &&
-      emailValid() &&
-      history.push("/");
-  }, [emailValid, passwordValid, history, name]);
+    passwordValid() && emailValid() && history.push("/");
+  }, [emailValid, passwordValid, history]);
 
   useEffect(() => {
     isAuth && submitLink();
-    // currUserError && setUser({ ...user, password: "" });
-  }, [isAuth, submitLink, currUserError]);
+  }, [isAuth, submitLink]);
 
   return (
     <AuthField
@@ -84,6 +71,16 @@ const AuthContainer = ({ name, currEmail }: Props): Node => {
       verificationEmail={currEmail}
     />
   );
+};
+
+AuthContainer.defaultProps = {
+  name: "",
+  currEmail: "",
+};
+
+AuthContainer.propTypes = {
+  name: PropTypes.string,
+  currEmail: PropTypes.string,
 };
 
 export default AuthContainer;

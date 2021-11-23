@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   Box,
   Typography,
@@ -10,18 +11,14 @@ import {
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { logOut } from "../redux/action";
-import { useHistory } from "react-router-dom";
 
 const actions = [{ icon: <LogoutIcon />, name: "LogOut" }];
 
 const Header = ({ name }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  const handleClick = (event) => {
-    console.log(actions.name);
+  const handleClick = () => {
     dispatch(logOut());
-    history.push(`/login`);
   };
 
   return (
@@ -33,7 +30,7 @@ const Header = ({ name }) => {
         height: 50,
         alignItems: "center",
       }}>
-      <Typography variant="h4" component="div" gutterBottom>
+      <Typography variant="h4" component="div">
         {name}
       </Typography>
 
@@ -55,5 +52,11 @@ const Header = ({ name }) => {
     </Box>
   );
 };
+Header.defaultProps = {
+  name: "",
+};
 
+Header.propTypes = {
+  name: PropTypes.string,
+};
 export default Header;

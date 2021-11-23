@@ -20,7 +20,6 @@ export const userReducer = (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         isAuthorized: true,
-        error: null,
         currEmail: payload.email,
         isLoading: false,
       };

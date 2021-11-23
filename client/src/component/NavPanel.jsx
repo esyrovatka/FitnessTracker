@@ -80,12 +80,12 @@ const NavPanel = () => {
           <HeaderLink
             clickHandler={workoutLink}
             name="New Workout"
-            invisible={currWorkout ? "invisible" : undefined}
+            invisible={currWorkout && true}
           />
           <HeaderLink
             clickHandler={workoutEditLink}
             name="Edit Workout"
-            invisible={!currWorkout ? "invisible" : undefined}
+            invisible={!currWorkout && true}
           />
         </>
       ) : (

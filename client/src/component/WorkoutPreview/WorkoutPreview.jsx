@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Card, CardContent, Typography } from "@mui/material/";
 import { useSelector } from "react-redux";
 import { exerciseList } from "../../redux/selectors";
@@ -33,5 +34,13 @@ const WorkoutPreview = ({ exercise, index }) => {
     </Card>
   );
 };
+WorkoutPreview.defaultProps = {
+  exercise: {},
+  index: null,
+};
 
+WorkoutPreview.propTypes = {
+  exercise: PropTypes.object,
+  index: PropTypes.number,
+};
 export default WorkoutPreview;

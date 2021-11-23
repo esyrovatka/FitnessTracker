@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { Box, Container, Button } from "@mui/material/";
 import ExerciseList from "./ExerciseList";
 import ButtonList from "./ButtonList";
@@ -39,6 +40,20 @@ const EditExerciseComponent = ({ list, updList, deleteExercise, sort }) => {
       </Box>
     </Container>
   ));
+};
+
+EditExerciseComponent.defaultProps = {
+  sort: () => {},
+  deleteExercise: () => {},
+  updList: () => {},
+  list: [],
+};
+
+EditExerciseComponent.propTypes = {
+  sort: PropTypes.func,
+  deleteExercise: PropTypes.func,
+  updList: PropTypes.func,
+  list: PropTypes.array,
 };
 
 export default EditExerciseComponent;

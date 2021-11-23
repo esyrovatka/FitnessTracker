@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { currData, isAuthorized, workout } from "../../redux/selectors.js";
+import {
+  currData,
+  isAuthorized,
+  workout,
+  workoutIsLoad,
+} from "../../redux/selectors.js";
 import { delWorkout, getAllExercise, getAllWorkout } from "../../redux/action";
 import { Box, Typography, Button } from "@mui/material/";
 import Header from "../../component/Header.jsx";
 import Footer from "../../component/Footer.jsx";
+import Loader from "../../component/Loader.jsx";
 
 import CalendarComponent from "../../component/CalendarComponent";
 import WorkoutPreview from "../../component/WorkoutPreview";
@@ -20,11 +26,14 @@ const Dashboard = () => {
     alignItems: "center",
     height: "65vh",
   };
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const isAuth = useSelector(isAuthorized);
   const allWorkout = useSelector(workout);
   const currWorkoutDate = useSelector(currData);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const Loading = useSelector(workoutIsLoad);
 
   useEffect(() => {
     dispatch(getAllExercise());
@@ -67,39 +76,44 @@ const Dashboard = () => {
   };
 
   return isAuth ? (
-    <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
-      <Header name="Dashboard" />
-      <Box sx={style}>
-        <CalendarComponent workoutData={workoutData} sx={{ width: "50%" }} />
-        <Box>
-          {currWorkout && (
-            <Typography variant="h3" gutterBottom component="div">
-              Workout Preview
-            </Typography>
-          )}
+    !Loading ? (
+      <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
+        <Header name="Dashboard" />
+        <Box sx={style}>
+          <CalendarComponent workoutData={workoutData} sx={{ width: "50%" }} />
+          <Box>
+            {currWorkout ? (
+              <>
+                <Typography variant="h3" gutterBottom component="div">
+                  Workout Preview
+                </Typography>
 
-          {currWorkout ? (
-            currWorkout.exerciseList.map((item, index) => (
-              <WorkoutPreview key={item._id} exercise={item} index={index} />
-            ))
-          ) : (
-            <>
-              <div>workout for this day is not created</div>
-              <Button size="small" onClick={createWorkoutLink}>
-                Create Workout
-              </Button>
-            </>
-          )}
-
-          {currWorkout && (
-            <Button size="small" onClick={editWorkoutLink}>
-              Edit Workout
-            </Button>
-          )}
+                {currWorkout.exerciseList.map((item, index) => (
+                  <WorkoutPreview
+                    key={item._id}
+                    exercise={item}
+                    index={index}
+                  />
+                ))}
+                <Button size="small" onClick={editWorkoutLink}>
+                  Edit Workout
+                </Button>
+              </>
+            ) : (
+              <>
+                <div>workout for this day is not created</div>
+                <Button size="small" onClick={createWorkoutLink}>
+                  Create Workout
+                </Button>
+              </>
+            )}
+          </Box>
         </Box>
+        <Footer />
       </Box>
-      <Footer />
-    </Box>
+    ) : (
+      <Loader />
+    )
   ) : (
     <Redirect to="/login" />
   );

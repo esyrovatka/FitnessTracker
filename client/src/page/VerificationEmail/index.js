@@ -1,3 +1,3 @@
-import VerificationEmail from "./VerificationEmail";
+// import VerificationEmail from "./VerificationEmail";
 
-export default VerificationEmail;
+// export default VerificationEmail;

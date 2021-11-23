@@ -1,10 +1,12 @@
-import React from "react";
+import * as React from "react";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import CreateForm from "./CreateForm";
 import { useDispatch } from "react-redux";
 import { createNewExercise } from "../../redux/action";
 import ModalComponent from "../ModalComponent";
 import { Typography } from "@mui/material";
+
 const CreateFormContainer = ({ name, type }) => {
   const dispatch = useDispatch();
 
@@ -16,9 +18,8 @@ const CreateFormContainer = ({ name, type }) => {
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
-    const name = event.target.name;
-    const val = event.target.value;
-    setForm({ ...form, [name]: val });
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
   };
 
   const submitFunc = (event) => {
@@ -52,5 +53,13 @@ const CreateFormContainer = ({ name, type }) => {
     </>
   );
 };
+CreateFormContainer.defaultProps = {
+  type: "",
+  name: "",
+};
 
+CreateFormContainer.propTypes = {
+  type: PropTypes.string,
+  name: PropTypes.string,
+};
 export default CreateFormContainer;

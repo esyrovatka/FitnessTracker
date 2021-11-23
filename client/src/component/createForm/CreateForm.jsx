@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import PropTypes from "prop-types";
 import {
   Container,
   Box,
@@ -66,4 +67,19 @@ const CreateForm = ({ name, submitFunc, type, form, handleChange }) => {
   );
 };
 
+CreateForm.defaultProps = {
+  submitFunc: () => {},
+  handleChange: () => {},
+  form: {},
+  type: "",
+  name: "",
+};
+
+CreateForm.propTypes = {
+  submitFunc: PropTypes.func,
+  handleChange: PropTypes.func,
+  form: PropTypes.object,
+  type: PropTypes.string,
+  name: PropTypes.string,
+};
 export default CreateForm;

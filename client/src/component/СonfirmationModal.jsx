@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Modal, Typography, Box, Button } from "@mui/material/";
 const СonfirmationModal = ({ open, handleClose, deleteExercise, id }) => {
   const style = {
@@ -52,6 +53,20 @@ const СonfirmationModal = ({ open, handleClose, deleteExercise, id }) => {
       </Modal>
     </>
   );
+};
+
+СonfirmationModal.defaultProps = {
+  handleClose: () => {},
+  deleteExercise: () => {},
+  id: "",
+  open: false,
+};
+
+СonfirmationModal.propTypes = {
+  handleClose: PropTypes.func,
+  deleteExercise: PropTypes.func,
+  id: PropTypes.string,
+  open: PropTypes.bool,
 };
 
 export default СonfirmationModal;

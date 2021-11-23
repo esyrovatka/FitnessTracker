@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import {
   Select,
   MenuItem,
@@ -6,7 +8,6 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-import React, { useEffect } from "react";
 import { useState } from "react";
 import ButtonList from "../EditExerciseComponent/ButtonList";
 
@@ -36,10 +37,10 @@ const CreateWorkout = ({
   };
 
   const exerciseChange = (event) => {
-    const changeExercise = allExer.find(
+    const changeExerciseId = allExer.find(
       (item) => item.name === event.target.value
     );
-    setCurrExer({ ...currExer, exerciseId: changeExercise._id });
+    setCurrExer({ ...currExer, exerciseId: changeExerciseId._id });
   };
 
   useEffect(() => {
@@ -105,6 +106,26 @@ const CreateWorkout = ({
       <Typography sx={textFieldStyle}>{currExercise.type}</Typography>
     </FormControl>
   );
+};
+
+CreateWorkout.defaultProps = {
+  deleteExercise: () => {},
+  allExer: [],
+  changeExercise: () => {},
+  index: null,
+  setWorkout: () => {},
+  workout: {},
+  exercise: {},
+};
+
+CreateWorkout.propTypes = {
+  deleteExercise: PropTypes.func,
+  changeExercise: PropTypes.func,
+  setWorkout: PropTypes.func,
+  allExer: PropTypes.array,
+  index: PropTypes.number,
+  workout: PropTypes.object,
+  exercise: PropTypes.object,
 };
 
 export default CreateWorkout;

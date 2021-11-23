@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import { Modal, Box, Typography } from "@mui/material";
 const ModalComponent = ({ openModal, name }) => {
   const style = {
@@ -27,6 +27,16 @@ const ModalComponent = ({ openModal, name }) => {
       </Box>
     </Modal>
   );
+};
+
+ModalComponent.defaultProps = {
+  openModal: false,
+  name: "",
+};
+
+ModalComponent.propTypes = {
+  openModal: PropTypes.bool,
+  name: PropTypes.string,
 };
 
 export default ModalComponent;

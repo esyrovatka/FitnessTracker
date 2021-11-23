@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { TextField, Select, MenuItem } from "@mui/material/";
 const ExerciseList = ({ item, changeExercise }) => {
@@ -43,4 +44,13 @@ const ExerciseList = ({ item, changeExercise }) => {
   );
 };
 
+ExerciseList.defaultProps = {
+  changeExercise: () => {},
+  item: {},
+};
+
+ExerciseList.propTypes = {
+  changeExercise: PropTypes.func,
+  item: PropTypes.object,
+};
 export default ExerciseList;

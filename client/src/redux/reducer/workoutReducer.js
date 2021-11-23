@@ -1,10 +1,10 @@
 import {
   UPDATE_WORKOUT,
   DELETE_WORKOUT,
-  //   CREATE_NEW_WORKOUT,
   SET_WORKOUT_LOADING,
   GET_ALL_WORKOUT,
   GET_CURRENT_DATA,
+  IS_LOGOUT,
 } from "../constants.js";
 
 const initialState = {
@@ -26,13 +26,14 @@ export const workoutReducer = (
     case UPDATE_WORKOUT:
       return { ...state, workoutList: payload, isLoading: false };
     case GET_CURRENT_DATA:
-      return { ...state, currData: payload };
+      return { ...state, currData: payload, isLoading: false };
     case DELETE_WORKOUT:
       return {
         ...state,
         workoutList: state.workoutList.filter((item) => item._id !== payload),
       };
-
+    case IS_LOGOUT:
+      return { ...state, workoutList: [] };
     default:
       return state;
   }

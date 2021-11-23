@@ -1,30 +1,15 @@
-// @flow
-
-import React from "react";
-import type { Node } from "react";
+import * as React from "react";
+import PropTypes from "prop-types";
 import {
   Container,
   Box,
   Typography,
   Avatar,
   TextField,
-  // FormControlLabel,
-  // Checkbox,
   Button,
   Link,
 } from "@mui/material/";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
-type Props = {
-  submitFunc: Function,
-  handleChange: Function,
-  user: Object,
-  helpLink: Function,
-  type: string,
-  disableForm: boolean,
-  errorMessage: number,
-  verificationEmail: string,
-};
 
 const AuthField = ({
   submitFunc,
@@ -35,7 +20,7 @@ const AuthField = ({
   disableForm,
   errorMessage,
   verificationEmail,
-}: Props): Node => {
+}) => {
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -52,7 +37,11 @@ const AuthField = ({
           {type}
         </Typography>
       </Box>
-      <Box component="form" onSubmit={submitFunc} noValidate sx={{ mt: 1 }}>
+      <Box
+        component="form"
+        onSubmit={(event) => submitFunc(event)}
+        noValidate
+        sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -62,7 +51,7 @@ const AuthField = ({
           name="email"
           autoComplete="email"
           autoFocus
-          onChange={handleChange}
+          onChange={(event) => handleChange(event)}
           value={user.email}
           disabled={verificationEmail ? true : false}
         />
@@ -76,7 +65,7 @@ const AuthField = ({
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={handleChange}
+            onChange={(event) => handleChange(event)}
             value={user.password}
           />
         ) : (
@@ -90,10 +79,9 @@ const AuthField = ({
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={handleChange}
+              onChange={(event) => handleChange(event)}
               value={user.password}
             />
-            <a href="mailto:evsyrovatka@gmail.com">email me here!</a>
           </>
         )}
 
@@ -107,10 +95,6 @@ const AuthField = ({
             Email is already in use
           </Typography>
         )}
-        {/* <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        /> */}
         <Button
           type="submit"
           fullWidth
@@ -119,7 +103,10 @@ const AuthField = ({
           sx={{ mt: 3, mb: 2 }}>
           {type}
         </Button>
-        <Link onClick={helpLink} variant="body2" sx={{ cursor: "pointer" }}>
+        <Link
+          onClick={() => helpLink()}
+          variant="body2"
+          sx={{ cursor: "pointer" }}>
           {type === "SignIn"
             ? "Don't have an account? Sign Up"
             : "Have an account? Sign In"}
@@ -127,6 +114,27 @@ const AuthField = ({
       </Box>
     </Container>
   );
+};
+
+AuthField.defaultProps = {
+  submitFunc: () => {},
+  handleChange: () => {},
+  helpLink: () => {},
+  verificationEmail: true,
+  user: {},
+  type: "",
+  errorMessage: "",
+};
+
+AuthField.propTypes = {
+  submitFunc: PropTypes.func,
+  handleChange: PropTypes.func,
+  helpLink: PropTypes.func,
+  verificationEmail: PropTypes.string,
+  user: PropTypes.object,
+  type: PropTypes.string,
+  errorMessage: PropTypes.number,
+  name: PropTypes.string,
 };
 
 export default AuthField;
