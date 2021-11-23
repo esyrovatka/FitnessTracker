@@ -4,6 +4,6 @@ export const NAV_PANEL_LINK = {
   exerciseEdit: "/exercise/edit",
   workout: "/workout",
   workoutEdit: "/workout/edit",
-  register: "/register",
+  register: "/registr",
   login: "/login",
 };

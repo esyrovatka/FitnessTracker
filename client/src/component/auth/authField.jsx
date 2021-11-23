@@ -19,7 +19,6 @@ const AuthField = ({
   type,
   disableForm,
   errorMessage,
-  verificationEmail,
 }) => {
   return (
     <Container component="main" maxWidth="xs">
@@ -49,41 +48,22 @@ const AuthField = ({
           id="email"
           label="Email Address"
           name="email"
-          autoComplete="email"
           autoFocus
           onChange={(event) => handleChange(event)}
           value={user.email}
-          disabled={verificationEmail ? true : false}
         />
-        {!verificationEmail ? (
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(event) => handleChange(event)}
-            value={user.password}
-          />
-        ) : (
-          <>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="VerificationCode"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(event) => handleChange(event)}
-              value={user.password}
-            />
-          </>
-        )}
+
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          onChange={(event) => handleChange(event)}
+          value={user.password}
+        />
 
         {errorMessage === 401 && (
           <Typography component="p" sx={{ color: "red" }}>
@@ -120,7 +100,6 @@ AuthField.defaultProps = {
   submitFunc: () => {},
   handleChange: () => {},
   helpLink: () => {},
-  verificationEmail: true,
   user: {},
   type: "",
   errorMessage: "",
@@ -130,7 +109,6 @@ AuthField.propTypes = {
   submitFunc: PropTypes.func,
   handleChange: PropTypes.func,
   helpLink: PropTypes.func,
-  verificationEmail: PropTypes.string,
   user: PropTypes.object,
   type: PropTypes.string,
   errorMessage: PropTypes.number,

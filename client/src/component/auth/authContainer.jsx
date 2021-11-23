@@ -6,8 +6,9 @@ import AuthField from "./authField";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, registrAction } from "../../redux/action";
 import { currentUserError, isAuthorized } from "../../redux/selectors.js";
+import { AuthType } from "../../constants/Auth";
 
-const AuthContainer = ({ name, currEmail }) => {
+const AuthContainer = ({ type }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currUserError = useSelector(currentUserError);
@@ -16,13 +17,13 @@ const AuthContainer = ({ name, currEmail }) => {
 
   const submitFunc = async (event) => {
     event.preventDefault();
-    name === "SignIn" && (await dispatch(loginAction(user)));
-    name === "SignUp" && (await dispatch(registrAction(user)));
+    type === AuthType.SignIn && (await dispatch(loginAction(user)));
+    type === AuthType.SignUp && (await dispatch(registrAction(user)));
   };
 
   const [disableForm, setDisableForm] = useState(true);
   const [user, setUser] = useState({
-    email: currEmail || "",
+    email: "",
     password: "",
   });
 
@@ -48,7 +49,9 @@ const AuthContainer = ({ name, currEmail }) => {
   }, [user.password, user.email, passwordValid, emailValid]);
 
   const helpLink = () => {
-    name === "SignIn" ? history.push("/registr") : history.push("/login");
+    type === AuthType.SignIn
+      ? history.push("/registr")
+      : history.push("/login");
   };
 
   const submitLink = useCallback(() => {
@@ -65,22 +68,19 @@ const AuthContainer = ({ name, currEmail }) => {
       handleChange={handleChange}
       user={user}
       helpLink={helpLink}
-      type={name}
+      type={type}
       disableForm={disableForm}
       errorMessage={currUserError}
-      verificationEmail={currEmail}
     />
   );
 };
 
 AuthContainer.defaultProps = {
-  name: "",
-  currEmail: "",
+  type: "",
 };
 
 AuthContainer.propTypes = {
-  name: PropTypes.string,
-  currEmail: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default AuthContainer;
