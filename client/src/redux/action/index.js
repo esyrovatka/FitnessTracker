@@ -1,5 +1,3 @@
-import axios from "axios";
-import store from "../store";
 import {
   IS_AUTHORIZED,
   IS_LOGOUT,
@@ -26,16 +24,6 @@ import {
   updateWorkoutAxios,
   updExerciseAxios,
 } from "../api/api";
-
-const { dispatchExport } = store;
-axios.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    const { status } = err.response;
-    status === 401 && dispatchExport(logOut());
-    return Promise.reject(err);
-  }
-);
 
 // user action //
 export const registrAction = (user) => async (dispatch) => {
@@ -95,12 +83,7 @@ export const updExercise = (exercise) => async (dispatch) => {
     await updExerciseAxios(exercise);
     dispatch({ type: UPDATE_EXERCISE, payload: exercise });
   } catch (err) {
-    if (err.response && err.response.status === 401) {
-      localStorage.removeItem("token");
-      dispatch({ type: IS_LOGOUT });
-    } else {
-      console.log(err);
-    }
+    console.log(err);
   }
 };
 

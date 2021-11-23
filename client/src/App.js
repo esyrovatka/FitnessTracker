@@ -19,7 +19,6 @@ export default function App() {
           <Route path="/" exact>
             <Dashbord />
           </Route>
-
           <Route path="/exercise" exact>
             <NewExercise />
           </Route>

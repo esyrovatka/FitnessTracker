@@ -1,8 +1,6 @@
 const User = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 
-const secret = "fitnessTracker";
-
 const registr = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -12,7 +10,9 @@ const registr = async (req, res) => {
     } else {
       const user = new User({ email, password });
       await user.save();
-      token = jwt.sign({ userId: user._id }, secret, { expiresIn: "180000s" });
+      token = jwt.sign({ userId: user._id }, process.env.SERCRET_KEY, {
+        expiresIn: "18s",
+      });
       res.status(201).json(token);
     }
   } catch (err) {
@@ -25,8 +25,8 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.find({ email, password });
     if (user.length) {
-      token = jwt.sign({ userId: user[0]._id }, secret, {
-        expiresIn: "180000s",
+      token = jwt.sign({ userId: user[0]._id }, process.env.SERCRET_KEY, {
+        expiresIn: "18s",
       });
       res.status(200).json(token);
     } else {

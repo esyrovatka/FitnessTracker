@@ -1,66 +1,44 @@
-import { axiosMongoDBInstance } from "./axiosConfig";
+import { axiosInstance } from "./axiosConfig";
 
 // Auth api //
 export const registrAxios = (user) => {
-  return axiosMongoDBInstance.post(`/registr`, user, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.post(`/registr`, user);
 };
 
 export const loginAxios = (user) => {
-  return axiosMongoDBInstance.post(`/login`, user, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.post(`/login`, user);
 };
 
 // Exercise api //
 export const getAllExerciseAxios = () => {
-  return axiosMongoDBInstance.get(`/exercise`, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.get(`/exercise`);
 };
 
 export const createNewExerciseAxios = (exercise) => {
-  return axiosMongoDBInstance.post(`/exercise`, exercise, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.post(`/exercise`, exercise);
 };
 
 export const updExerciseAxios = (exercise) => {
-  return axiosMongoDBInstance.put(`/exercise/update`, exercise, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.put(`/exercise/update`, exercise);
 };
 
 export const delExerciseAxios = (id) => {
-  return axiosMongoDBInstance.post(
-    `/exercise/delete`,
-    { id },
-    { headers: { Authorization: "Bearer " + localStorage.token } }
-  );
+  return axiosInstance.post(`/exercise/delete`, { id });
 };
 
 // Workout api //
 export const getAllWorkoutAxios = () => {
-  return axiosMongoDBInstance.get(`/workout`, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.get(`/workout`);
 };
 
 export const createWorkoutAxios = (workout) => {
-  return axiosMongoDBInstance.post(`/workout`, workout, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.post(`/workout`, workout);
 };
 
 export const updateWorkoutAxios = (workout) => {
-  return axiosMongoDBInstance.put(`/workout/edit`, workout, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.put(`/workout/edit`, workout);
 };
 
 export const delWorkoutAxios = (workout) => {
-  return axiosMongoDBInstance.post(`/workout/delete`, workout, {
-    headers: { Authorization: "Bearer " + localStorage.token },
-  });
+  return axiosInstance.post(`/workout/delete`, workout);
 };
