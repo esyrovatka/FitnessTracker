@@ -11,6 +11,7 @@ import {
   GET_CURRENT_DATA,
   DELETE_WORKOUT,
   IS_UTHORIZED_LOADING,
+  TEST,
 } from "../constants.js";
 import {
   createNewExerciseApi,
@@ -33,6 +34,7 @@ export const registrAction = (user) => async (dispatch) => {
     localStorage.setItem("token", response.data);
     dispatch({ type: IS_AUTHORIZED, payload: user });
   } catch (err) {
+    dispatch({ type: IS_UTHORIZED_LOADING });
     dispatch({ type: SET_USER_ERROR, payload: err.response.status });
   }
 };
@@ -52,6 +54,10 @@ export const logOut = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("Exercise_Order");
   return { type: IS_LOGOUT };
+};
+
+export const test = () => {
+  return { type: TEST };
 };
 
 // Exercise action //

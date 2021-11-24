@@ -6,4 +6,5 @@ export const PagePaths = {
   workoutEdit: "/workout/edit",
   register: "/registr",
   login: "/login",
+  verification: "/verification",
 };

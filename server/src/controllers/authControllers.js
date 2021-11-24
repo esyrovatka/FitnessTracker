@@ -30,7 +30,7 @@ const login = async (req, res) => {
       });
       res.status(200).json(token);
     } else {
-      res.status(401).json("not found user with this email and password");
+      res.status(404).json("not found user with this email and password");
     }
   } catch (err) {
     console.log(err);

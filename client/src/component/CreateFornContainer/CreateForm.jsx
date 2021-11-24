@@ -10,6 +10,7 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material/";
+import { ExerciseMeasurement } from "../../constants/ExerciseMeasurement";
 
 const CreateForm = ({ name, submitFunc, type, form, handleChange }) => {
   return (
@@ -48,12 +49,18 @@ const CreateForm = ({ name, submitFunc, type, form, handleChange }) => {
           defaultValue="Select type"
           value={form.type}
           onChange={handleChange}>
-          <MenuItem value="Select type" disabled>
-            Select type
+          <MenuItem value={ExerciseMeasurement.Select} disabled>
+            {ExerciseMeasurement.Select}
           </MenuItem>
-          <MenuItem value="Kg">Kg</MenuItem>
-          <MenuItem value="Km">Km</MenuItem>
-          <MenuItem value="number of times">number of times</MenuItem>
+          <MenuItem value={ExerciseMeasurement.kg}>
+            {ExerciseMeasurement.kg}
+          </MenuItem>
+          <MenuItem value={ExerciseMeasurement.km}>
+            {ExerciseMeasurement.km}
+          </MenuItem>
+          <MenuItem value={ExerciseMeasurement.number}>
+            {ExerciseMeasurement.number}
+          </MenuItem>
         </Select>
         <Button
           type="submit"

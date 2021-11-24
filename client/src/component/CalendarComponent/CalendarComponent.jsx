@@ -41,7 +41,7 @@ const CalendarComponent = ({ workoutData }) => {
             <Badge
               key={String(day)}
               overlap="circular"
-              badgeContent={isSelect ? "🌚" : undefined}>
+              badgeContent={isSelect && "🌚"}>
               <PickersDay {...DayComponentProps} />
             </Badge>
           );

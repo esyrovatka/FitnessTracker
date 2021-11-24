@@ -9,7 +9,7 @@ import {
   isAuthorized,
   workout,
 } from "../../redux/selectors";
-import CreateWorkout from "../../component/createWorkout";
+import CreateWorkout from "../../component/CreateWorkout";
 import {
   delWorkout,
   getAllExercise,

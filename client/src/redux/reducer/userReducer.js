@@ -26,7 +26,7 @@ export const userReducer = (state = initialState, { type, payload } = {}) => {
     case IS_LOGOUT:
       return { ...state, isAuthorized: false, error: null, currEmail: null };
     case SET_USER_ERROR:
-      return { ...state, error: payload };
+      return { ...state, error: payload, isLoading: true };
     default:
       return state;
   }

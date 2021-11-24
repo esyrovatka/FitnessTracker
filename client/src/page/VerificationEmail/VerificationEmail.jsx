@@ -1,11 +1,7 @@
-// import React from "react";
-// import { useSelector } from "react-redux";
-// import AuthField from "../../component/auth";
-// import { currUserEmail } from "../../redux/selectors";
+import React from "react";
+import AuthContainer from "../../component/AuthContainer";
 
-// const VerificationEmail = () => {
-//   const currEmail = useSelector(currUserEmail);
-
-//   return <AuthField name="Verification" currEmail={currEmail} />;
-// };
-// export default VerificationEmail;
+const VerificationEmail = () => {
+  return <AuthContainer type="Verification" />;
+};
+export default VerificationEmail;

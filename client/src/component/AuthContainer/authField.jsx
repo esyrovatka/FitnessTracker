@@ -11,6 +11,7 @@ import {
 } from "@mui/material/";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { AuthType } from "../../constants/Auth";
+import { ErrorMessage, HelpMessage } from "../../constants/ErrorMessage";
 
 const AuthField = ({
   submitFunc,
@@ -21,15 +22,15 @@ const AuthField = ({
   disableForm,
   errorMessage,
 }) => {
+  const style = {
+    marginTop: 25,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 25,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
+      <Box sx={style}>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -62,14 +63,14 @@ const AuthField = ({
           value={user.password}
         />
 
-        {errorMessage === 401 && (
+        {errorMessage === 404 && (
           <Typography component="p" sx={{ color: "red" }}>
-            Email or Password is not correct
+            {ErrorMessage.Incorrect}
           </Typography>
         )}
         {errorMessage === 406 && (
           <Typography component="p" sx={{ color: "red" }}>
-            Email is already in use
+            {ErrorMessage.AlreadyUse}
           </Typography>
         )}
         <Button
@@ -82,8 +83,8 @@ const AuthField = ({
         </Button>
         <Link onClick={helpLink} variant="body2" sx={{ cursor: "pointer" }}>
           {type === AuthType.SignIn
-            ? "Don't have an account? Sign Up"
-            : "Have an account? Sign In"}
+            ? HelpMessage.CreateAcc
+            : HelpMessage.LoginAcc}
         </Link>
       </Box>
     </Container>

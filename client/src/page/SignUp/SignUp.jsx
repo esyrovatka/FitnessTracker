@@ -1,5 +1,5 @@
 import React from "react";
-import AuthField from "../../component/authContainer";
+import AuthField from "../../component/AuthContainer";
 import { AuthType } from "../../constants/Auth";
 
 const SignUp = () => {
