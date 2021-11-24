@@ -17,7 +17,7 @@ const CalendarComponent = ({ workoutData }) => {
     dispatch(getCurrData(new Date()));
   }, [dispatch]);
 
-  const changeData = (newValue) => {
+  const changeData = () => (newValue) => {
     setValue(newValue);
     dispatch(getCurrData(newValue));
   };
@@ -26,7 +26,7 @@ const CalendarComponent = ({ workoutData }) => {
       <StaticDatePicker
         renderInput={(params) => <TextField {...params} />}
         value={value}
-        onChange={(newValue) => changeData(newValue)}
+        onChange={changeData(value)}
         renderDay={(day, _value, DayComponentProps) => {
           const isSelect =
             workoutData &&
@@ -39,7 +39,7 @@ const CalendarComponent = ({ workoutData }) => {
 
           return (
             <Badge
-              key={day.toString()}
+              key={String(day)}
               overlap="circular"
               badgeContent={isSelect ? "🌚" : undefined}>
               <PickersDay {...DayComponentProps} />

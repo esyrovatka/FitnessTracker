@@ -5,20 +5,20 @@ import PropTypes from "prop-types";
 import AuthField from "./authField";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, registrAction } from "../../redux/action";
-import { currentUserError, isAuthorized } from "../../redux/selectors.js";
+import { currentUserError } from "../../redux/selectors.js";
 import { AuthType } from "../../constants/Auth";
+import { PagePaths } from "../../constants/PagePaths";
 
 const AuthContainer = ({ type }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currUserError = useSelector(currentUserError);
 
-  const isAuth = useSelector(isAuthorized);
-
   const submitFunc = async (event) => {
     event.preventDefault();
     type === AuthType.SignIn && (await dispatch(loginAction(user)));
     type === AuthType.SignUp && (await dispatch(registrAction(user)));
+    !disableForm && history.push(PagePaths.dashboard);
   };
 
   const [disableForm, setDisableForm] = useState(true);
@@ -46,21 +46,12 @@ const AuthContainer = ({ type }) => {
     passwordValid() && emailValid()
       ? setDisableForm(false)
       : setDisableForm(true);
-  }, [user.password, user.email, passwordValid, emailValid]);
+  }, [passwordValid, emailValid]);
 
   const helpLink = () => {
-    type === AuthType.SignIn
-      ? history.push("/registr")
-      : history.push("/login");
+    type === AuthType.SignIn && history.push(PagePaths.register);
+    type === AuthType.SignUp && history.push(PagePaths.login);
   };
-
-  const submitLink = useCallback(() => {
-    passwordValid() && emailValid() && history.push("/");
-  }, [emailValid, passwordValid, history]);
-
-  useEffect(() => {
-    isAuth && submitLink();
-  }, [isAuth, submitLink]);
 
   return (
     <AuthField

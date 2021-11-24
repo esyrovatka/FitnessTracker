@@ -13,23 +13,23 @@ import {
   IS_UTHORIZED_LOADING,
 } from "../constants.js";
 import {
-  createNewExerciseAxios,
-  createWorkoutAxios,
-  delExerciseAxios,
-  delWorkoutAxios,
-  getAllExerciseAxios,
-  getAllWorkoutAxios,
-  loginAxios,
-  registrAxios,
-  updateWorkoutAxios,
-  updExerciseAxios,
+  createNewExerciseApi,
+  createWorkoutApi,
+  delExerciseApi,
+  delWorkoutApi,
+  getAllExerciseApi,
+  getAllWorkoutApi,
+  loginApi,
+  registrApi,
+  updateWorkoutApi,
+  updExerciseApi,
 } from "../api/api";
 
 // user action //
 export const registrAction = (user) => async (dispatch) => {
   try {
     dispatch({ type: IS_UTHORIZED_LOADING });
-    const response = await registrAxios(user);
+    const response = await registrApi(user);
     localStorage.setItem("token", response.data);
     dispatch({ type: IS_AUTHORIZED, payload: user });
   } catch (err) {
@@ -40,7 +40,7 @@ export const registrAction = (user) => async (dispatch) => {
 export const loginAction = (user) => async (dispatch) => {
   try {
     dispatch({ type: IS_UTHORIZED_LOADING });
-    const response = await loginAxios(user);
+    const response = await loginApi(user);
     localStorage.setItem("token", response.data);
     dispatch({ type: IS_AUTHORIZED, payload: user });
   } catch (err) {
@@ -58,7 +58,7 @@ export const logOut = () => {
 export const getAllExercise = () => async (dispatch) => {
   dispatch({ type: SET_EXERCISE_LOADING });
   try {
-    const response = await getAllExerciseAxios();
+    const response = await getAllExerciseApi();
     dispatch({ type: GET_ALL_EXERCISE, payload: response.data });
   } catch (err) {
     console.log(err);
@@ -67,7 +67,7 @@ export const getAllExercise = () => async (dispatch) => {
 
 export const createNewExercise = (exercise) => async () => {
   try {
-    const response = await createNewExerciseAxios(exercise);
+    const response = await createNewExerciseApi(exercise);
     if (localStorage.Exercise_Order) {
       const order = JSON.parse(localStorage.Exercise_Order);
       order.push(response.data._id);
@@ -80,7 +80,7 @@ export const createNewExercise = (exercise) => async () => {
 
 export const updExercise = (exercise) => async (dispatch) => {
   try {
-    await updExerciseAxios(exercise);
+    await updExerciseApi(exercise);
     dispatch({ type: UPDATE_EXERCISE, payload: exercise });
   } catch (err) {
     console.log(err);
@@ -89,7 +89,7 @@ export const updExercise = (exercise) => async (dispatch) => {
 
 export const delExercise = (id) => async (dispatch) => {
   try {
-    const response = await delExerciseAxios(id);
+    const response = await delExerciseApi(id);
     if (localStorage.Exercise_Order) {
       const order = JSON.parse(localStorage.Exercise_Order);
       const result = order.filter((item) => item !== id);
@@ -105,7 +105,7 @@ export const delExercise = (id) => async (dispatch) => {
 export const getAllWorkout = () => async (dispatch) => {
   dispatch({ type: SET_WORKOUT_LOADING });
   try {
-    const response = await getAllWorkoutAxios();
+    const response = await getAllWorkoutApi();
     dispatch({
       type: GET_ALL_WORKOUT,
       payload: response.data,
@@ -117,7 +117,7 @@ export const getAllWorkout = () => async (dispatch) => {
 
 export const createWorkout = (workout) => async () => {
   try {
-    await createWorkoutAxios(workout);
+    await createWorkoutApi(workout);
   } catch (err) {
     console.log(err);
   }
@@ -125,7 +125,7 @@ export const createWorkout = (workout) => async () => {
 
 export const updateWorkout = (workout) => async () => {
   try {
-    await updateWorkoutAxios(workout);
+    await updateWorkoutApi(workout);
   } catch (err) {
     console.log(err);
   }
@@ -133,7 +133,7 @@ export const updateWorkout = (workout) => async () => {
 
 export const delWorkout = (workout) => async (dispatch) => {
   try {
-    const response = await delWorkoutAxios(workout);
+    const response = await delWorkoutApi(workout);
     dispatch({
       type: DELETE_WORKOUT,
       payload: response.data._id,

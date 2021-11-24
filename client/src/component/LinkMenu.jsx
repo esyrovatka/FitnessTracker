@@ -3,37 +3,37 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { currData, isAuthorized, workout } from "../redux/selectors.js";
 import HeaderLink from "./HeaderLink";
-import { NAV_PANEL_LINK } from "../constants/PagePaths.js";
+import { PagePaths } from "../constants/PagePaths.js";
 const LinkMenu = () => {
   const history = useHistory();
   const isAuth = useSelector(isAuthorized);
 
   const dashboardLink = () => {
-    history.push(NAV_PANEL_LINK.dashboard);
+    history.push(PagePaths.dashboard);
   };
 
   const exerciseLink = () => {
-    history.push(NAV_PANEL_LINK.exercise);
+    history.push(PagePaths.exercise);
   };
 
   const exerciseEditLink = () => {
-    history.push(NAV_PANEL_LINK.exerciseEdit);
+    history.push(PagePaths.exerciseEdit);
   };
 
   const workoutLink = () => {
-    history.push(NAV_PANEL_LINK.workout);
+    history.push(PagePaths.workout);
   };
 
   const workoutEditLink = () => {
-    history.push(NAV_PANEL_LINK.workoutEdit);
+    history.push(PagePaths.workoutEdit);
   };
 
   const registerLink = () => {
-    history.push(NAV_PANEL_LINK.register);
+    history.push(PagePaths.register);
   };
 
   const loginLink = () => {
-    history.push(NAV_PANEL_LINK.login);
+    history.push(PagePaths.login);
   };
 
   const allWorkout = useSelector(workout);

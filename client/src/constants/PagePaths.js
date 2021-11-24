@@ -1,4 +1,4 @@
-export const NAV_PANEL_LINK = {
+export const PagePaths = {
   dashboard: "/",
   exercise: "/exercise",
   exerciseEdit: "/exercise/edit",

@@ -10,6 +10,7 @@ import {
   Link,
 } from "@mui/material/";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { AuthType } from "../../constants/Auth";
 
 const AuthField = ({
   submitFunc,
@@ -36,11 +37,7 @@ const AuthField = ({
           {type}
         </Typography>
       </Box>
-      <Box
-        component="form"
-        onSubmit={(event) => submitFunc(event)}
-        noValidate
-        sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={submitFunc} noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -49,7 +46,7 @@ const AuthField = ({
           label="Email Address"
           name="email"
           autoFocus
-          onChange={(event) => handleChange(event)}
+          onChange={handleChange}
           value={user.email}
         />
 
@@ -61,7 +58,7 @@ const AuthField = ({
           label="Password"
           type="password"
           id="password"
-          onChange={(event) => handleChange(event)}
+          onChange={handleChange}
           value={user.password}
         />
 
@@ -83,11 +80,8 @@ const AuthField = ({
           sx={{ mt: 3, mb: 2 }}>
           {type}
         </Button>
-        <Link
-          onClick={() => helpLink()}
-          variant="body2"
-          sx={{ cursor: "pointer" }}>
-          {type === "SignIn"
+        <Link onClick={helpLink} variant="body2" sx={{ cursor: "pointer" }}>
+          {type === AuthType.SignIn
             ? "Don't have an account? Sign Up"
             : "Have an account? Sign In"}
         </Link>

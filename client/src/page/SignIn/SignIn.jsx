@@ -1,5 +1,5 @@
 import React from "react";
-import AuthField from "../../component/auth";
+import AuthField from "../../component/authContainer";
 import { AuthType } from "../../constants/Auth";
 
 const SignIn = () => {

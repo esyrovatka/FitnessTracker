@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ButtonList from "../EditExerciseComponent/ButtonList";
+import sortExercise from "../../utils/sortExercise";
 
 const CreateWorkout = ({
   exercise,
@@ -48,19 +49,10 @@ const CreateWorkout = ({
   }, [changeExercise, currExer]);
 
   const sort = (index, type) => {
-    const newArr = [...workout.exerciseList];
-    type === "Up" &&
-      ([newArr[index], newArr[index - 1]] = [newArr[index - 1], newArr[index]]);
-
-    type === "Down" &&
-      ([newArr[index], newArr[index + 1]] = [newArr[index + 1], newArr[index]]);
-
-    const updateWorkout = {
+    setWorkout({
       ...workout,
-      exerciseList: newArr,
-    };
-
-    setWorkout(updateWorkout);
+      exerciseList: sortExercise(index, type, workout.exerciseList),
+    });
   };
 
   const currExercise = allExer.find((item) => item._id === currExer.exerciseId);

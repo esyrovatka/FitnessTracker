@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material/";
 import { useDispatch, useSelector } from "react-redux";
+import sortExercise from "../../utils/sortExercise";
 import {
   exerciseList,
   exerciseIsLoad,
@@ -103,14 +104,7 @@ const ExersiceEdit = () => {
   };
 
   const sort = (index, type) => {
-    const newArr = [...updateList];
-    type === "Up" &&
-      ([newArr[index], newArr[index - 1]] = [newArr[index - 1], newArr[index]]);
-
-    type === "Down" &&
-      ([newArr[index], newArr[index + 1]] = [newArr[index + 1], newArr[index]]);
-
-    setUpdateList(newArr);
+    setUpdateList(sortExercise(index, type, updateList));
   };
 
   return isAuth ? (
