@@ -10,7 +10,7 @@ import { Box, Button, Typography } from "@mui/material/";
 import { createWorkout, getAllExercise } from "../../redux/action";
 import Header from "../../component/Header";
 import Loader from "../../component/Loader";
-import CreateWorkout from "../../component/CreateFornContainer";
+import CreateWorkout from "../../component/CreateWorkout";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Redirect } from "react-router-dom";
 import exerciseValidation from "../../utils/exerciseValidation";

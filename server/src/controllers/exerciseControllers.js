@@ -2,20 +2,13 @@ const User = require("../models/userModel.js");
 const Workout = require("../models/workoutModel.js");
 const Exercise = require("../models/exerciseModel.js");
 const jwt = require("jsonwebtoken");
-const secret = "fitnessTracker";
 
 const getExecrises = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SERCRET_KEY);
     const findExercise = await Exercise.find({ userId: decoded.userId });
     res.status(200).json(findExercise);
-    // if (findExercise.length) {
-    //   res.status(200).json(findExercise);
-    // } else {
-    //   console.log("Exercise  not find");
-    //   res.status(404).json("Havn't exercise");
-    // }
   } catch (err) {
     console.log(err);
   }
@@ -24,12 +17,11 @@ const getExecrises = async (req, res) => {
 const createExecrises = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SERCRET_KEY);
 
     const { name, type } = req.body;
     const exercise = new Exercise({ name, type, userId: decoded.userId });
     await exercise.save();
-    console.log("Exercise create");
     res.status(200).json(exercise);
   } catch (err) {
     console.log(err);
@@ -54,7 +46,7 @@ const updateExecrises = async (req, res) => {
 const deleteExecrises = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const { userId } = jwt.verify(token, secret);
+    const { userId } = jwt.verify(token, process.env.SERCRET_KEY);
     const { id } = req.body;
 
     console.log(userId);
@@ -66,7 +58,6 @@ const deleteExecrises = async (req, res) => {
       { multi: true }
     );
 
-    console.log("Exercise delete");
     res.status(200).json(result);
   } catch (err) {
     console.log(err);

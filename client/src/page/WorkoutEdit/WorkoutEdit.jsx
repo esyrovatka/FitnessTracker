@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material/";
-import Header from "../../component/Header";
+import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currData,
-  exerciseList,
-  isAuthorized,
-  workout,
-} from "../../redux/selectors";
+import { Box, Button, Typography } from "@mui/material/";
 import CreateWorkout from "../../component/CreateWorkout";
+import Loader from "../../component/Loader";
+import Header from "../../component/Header";
+import exerciseValidation from "../../utils/exerciseValidation";
 import {
   delWorkout,
   getAllExercise,
   getAllWorkout,
   updateWorkout,
 } from "../../redux/action";
-import exerciseValidation from "../../utils/exerciseValidation";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  currData,
+  exerciseList,
+  isAuthorized,
+  workout,
+  workoutIsLoad,
+} from "../../redux/selectors";
 
 const WorkoutEdit = () => {
   const butStyle = { m: 5, width: 180, padding: "20px" };
@@ -30,8 +31,10 @@ const WorkoutEdit = () => {
 
   const allExercise = useSelector(exerciseList);
   const allWorkout = useSelector(workout);
+  const loading = useSelector(workoutIsLoad);
   const currWorkoutDate = useSelector(currData);
   const isAuth = useSelector(isAuthorized);
+
   const [currWorkout, setCurrWorkout] = useState(); // curr data workout
   const [validWorkout, setValidWorkout] = useState(true);
   useEffect(() => {
@@ -79,51 +82,55 @@ const WorkoutEdit = () => {
   };
 
   return isAuth ? (
-    <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
-      <Header name="Edit Workout" />
-      <Box
-        sx={{
-          marginTop: 25,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "60vh",
-        }}>
-        <Typography variant="h5" component="div">
-          Workout at: {currWorkoutDate.getDate()}.{currWorkoutDate.getMonth()}.
-          {currWorkoutDate.getYear() + 1900}
-        </Typography>
-
-        {currWorkout &&
-          currWorkout.exerciseList.map((item, index) => (
-            <CreateWorkout
-              key={item._id}
-              index={index}
-              exercise={item}
-              allExer={allExercise}
-              changeExercise={changeExercise}
-              workout={currWorkout}
-              setWorkout={setCurrWorkout}
-              deleteExercise={deleteExercise}
-            />
-          ))}
-
-        {!validWorkout && (
-          <Typography sx={{ color: "red" }}>
-            please enter correct info
+    !loading ? (
+      <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
+        <Header name="Edit Workout" />
+        <Box
+          sx={{
+            marginTop: 25,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "60vh",
+          }}>
+          <Typography variant="h5" component="div">
+            Workout at: {currWorkoutDate.getDate()}.{currWorkoutDate.getMonth()}
+            .{currWorkoutDate.getYear() + 1900}
           </Typography>
-        )}
-        <Box>
-          <Button variant="contained" sx={butStyle} onClick={editWorkout}>
-            Edit Workout
-          </Button>
 
-          <Button variant="contained" sx={butStyle} onClick={deleteWorkout}>
-            Delete Workout
-          </Button>
+          {currWorkout &&
+            currWorkout.exerciseList.map((item, index) => (
+              <CreateWorkout
+                key={item._id}
+                index={index}
+                exercise={item}
+                allExer={allExercise}
+                changeExercise={changeExercise}
+                workout={currWorkout}
+                setWorkout={setCurrWorkout}
+                deleteExercise={deleteExercise}
+              />
+            ))}
+
+          {!validWorkout && (
+            <Typography sx={{ color: "red" }}>
+              please enter correct info
+            </Typography>
+          )}
+          <Box>
+            <Button variant="contained" sx={butStyle} onClick={editWorkout}>
+              Edit Workout
+            </Button>
+
+            <Button variant="contained" sx={butStyle} onClick={deleteWorkout}>
+              Delete Workout
+            </Button>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    ) : (
+      <Loader />
+    )
   ) : (
     <Redirect to="/login" />
   );

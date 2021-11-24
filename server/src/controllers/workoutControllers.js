@@ -1,14 +1,13 @@
 const User = require("../models/userModel.js");
 const Workout = require("../models/workoutModel.js");
 const jwt = require("jsonwebtoken");
-const secret = "fitnessTracker";
 
 const createWorkout = async (req, res) => {
   try {
     console.log("req.body 1");
     console.log(req.body, "req.body");
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SERCRET_KEY);
 
     const { data, exerciseList } = req.body;
     const workout = new Workout({
@@ -27,7 +26,7 @@ const createWorkout = async (req, res) => {
 const editWorkout = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SERCRET_KEY);
 
     const { _id, exerciseList } = req.body;
     console.log(exerciseList);
@@ -43,7 +42,7 @@ const editWorkout = async (req, res) => {
 const getWorkout = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SERCRET_KEY);
     const workout = await Workout.find({ userId: decoded.userId });
     res.status(200).json(workout);
     // if (workout.length) {
@@ -59,7 +58,7 @@ const getWorkout = async (req, res) => {
 const deleteWorkout = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SERCRET_KEY);
     const { _id } = req.body;
 
     const result = await Workout.findByIdAndRemove({ _id });

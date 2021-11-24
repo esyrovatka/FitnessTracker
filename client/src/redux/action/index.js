@@ -11,7 +11,6 @@ import {
   GET_CURRENT_DATA,
   DELETE_WORKOUT,
   IS_UTHORIZED_LOADING,
-  TEST,
 } from "../constants.js";
 import {
   createNewExerciseApi,
@@ -54,10 +53,6 @@ export const logOut = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("Exercise_Order");
   return { type: IS_LOGOUT };
-};
-
-export const test = () => {
-  return { type: TEST };
 };
 
 // Exercise action //

@@ -34,6 +34,7 @@ export const workoutReducer = (
       };
     case IS_LOGOUT:
       return { ...state, workoutList: [] };
+
     default:
       return state;
   }
