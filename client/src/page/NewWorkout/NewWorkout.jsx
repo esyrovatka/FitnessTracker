@@ -139,6 +139,8 @@ const NewWorkout = () => {
                   deleteExercise={deleteExercise}
                   moveCard={moveCard}
                   id={item.id}
+                  validWorkout={validWorkout}
+                  setValidWorkout={setValidWorkout}
                 />
               ))}
             </DndProvider>
@@ -155,7 +157,11 @@ const NewWorkout = () => {
             variant="contained"
             sx={butStyle}
             onClick={createNewWorkout}
-            disabled={workout.exerciseList.length ? false : true}>
+            disabled={
+              validWorkout && workout.exerciseList.length ? false : true
+            }
+            // disabled={workout.exerciseList.length ? false : true}
+          >
             Create Workout
           </Button>
         </Box>

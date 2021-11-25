@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography } from "@mui/material/";
-import CreateWorkout from "../../component/CreateWorkoutContainer";
+import CreateWorkoutContainer from "../../component/CreateWorkoutContainer";
 import Loader from "../../component/Loader";
 import Header from "../../component/Header";
 import exerciseValidation from "../../utils/exerciseValidation";
@@ -37,6 +37,7 @@ const WorkoutEdit = () => {
 
   const [currWorkout, setCurrWorkout] = useState(); // curr data workout
   const [validWorkout, setValidWorkout] = useState(true);
+
   useEffect(() => {
     const result =
       allWorkout &&
@@ -100,7 +101,7 @@ const WorkoutEdit = () => {
 
           {currWorkout &&
             currWorkout.exerciseList.map((item, index) => (
-              <CreateWorkout
+              <CreateWorkoutContainer
                 key={item._id}
                 index={index}
                 exercise={item}
@@ -109,6 +110,8 @@ const WorkoutEdit = () => {
                 workout={currWorkout}
                 setWorkout={setCurrWorkout}
                 deleteExercise={deleteExercise}
+                validWorkout={validWorkout}
+                setValidWorkout={setValidWorkout}
               />
             ))}
 
@@ -118,7 +121,11 @@ const WorkoutEdit = () => {
             </Typography>
           )}
           <Box>
-            <Button variant="contained" sx={butStyle} onClick={editWorkout}>
+            <Button
+              variant="contained"
+              sx={butStyle}
+              onClick={editWorkout}
+              disabled={validWorkout ? false : true}>
               Edit Workout
             </Button>
 

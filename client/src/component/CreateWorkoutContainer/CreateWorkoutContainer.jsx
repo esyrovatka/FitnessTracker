@@ -7,10 +7,12 @@ import {
   Typography,
   FormControl,
   Button,
+  Box,
 } from "@mui/material";
 import { useState } from "react";
 import ButtonList from "../EditExerciseComponent/ButtonList";
 import sortExercise from "../../utils/sortExercise";
+import { workoutValidation } from "../../utils/workoutValidation";
 
 const CreateWorkoutContainer = ({
   exercise,
@@ -20,6 +22,8 @@ const CreateWorkoutContainer = ({
   setWorkout,
   workout,
   deleteExercise,
+  validWorkout,
+  setValidWorkout,
 }) => {
   const textFieldStyle = {
     width: 150,
@@ -34,6 +38,8 @@ const CreateWorkoutContainer = ({
   const handleChange = (event) => {
     const val = event.target.value;
     const name = event.target.name;
+    workoutValidation(val) ? setValidWorkout(true) : setValidWorkout(false);
+
     setCurrExer({ ...currExer, [name]: val });
   };
 
@@ -57,46 +63,48 @@ const CreateWorkoutContainer = ({
 
   const currExercise = allExer.find((item) => item._id === currExer.exerciseId);
   return (
-    <FormControl
-      sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      <Select
-        sx={textFieldStyle}
-        value={currExercise.name}
-        name="exerciseId"
-        onChange={exerciseChange}>
-        {allExer.map((item) => (
-          <MenuItem key={item._id} value={item.name}>
-            {item.name}
-          </MenuItem>
-        ))}
-      </Select>
+    <Box>
+      <FormControl
+        sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <Select
+          sx={textFieldStyle}
+          value={currExercise.name}
+          name="exerciseId"
+          onChange={exerciseChange}>
+          {allExer.map((item) => (
+            <MenuItem key={item._id} value={item.name}>
+              {item.name}
+            </MenuItem>
+          ))}
+        </Select>
 
-      <TextField
-        sx={textFieldStyle}
-        required
-        name="repeats"
-        value={currExer.repeats}
-        label="repeats"
-        onChange={handleChange}
-      />
+        <TextField
+          sx={textFieldStyle}
+          required
+          name="repeats"
+          value={currExer.repeats}
+          label="repeats"
+          onChange={handleChange}
+        />
 
-      <TextField
-        sx={textFieldStyle}
-        required
-        name="measurement"
-        value={currExer.measurement}
-        label="measurement"
-        onChange={handleChange}
-      />
+        <TextField
+          sx={textFieldStyle}
+          required
+          name="measurement"
+          value={currExer.measurement}
+          label="measurement"
+          onChange={handleChange}
+        />
 
-      <ButtonList index={index} list={workout.exerciseList} sort={sort} />
+        <ButtonList index={index} list={workout.exerciseList} sort={sort} />
 
-      <Button variant="contained" onClick={() => deleteExercise(currExer)}>
-        Delete
-      </Button>
+        <Button variant="contained" onClick={() => deleteExercise(currExer)}>
+          Delete
+        </Button>
 
-      <Typography sx={textFieldStyle}>{currExercise.type}</Typography>
-    </FormControl>
+        <Typography sx={textFieldStyle}>{currExercise.type}</Typography>
+      </FormControl>
+    </Box>
   );
 };
 
