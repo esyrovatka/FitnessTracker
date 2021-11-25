@@ -7,4 +7,5 @@ export const PagePaths = {
   register: "/registr",
   login: "/login",
   verification: "/verification",
+  settings: "/settings",
 };

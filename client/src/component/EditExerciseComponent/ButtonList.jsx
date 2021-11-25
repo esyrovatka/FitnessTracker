@@ -5,6 +5,7 @@ const ButtonList = ({ index, list, sort }) => {
   return (
     <>
       <Button
+        sx={{ width: 80, m: 1 }}
         variant="contained"
         onClick={() => sort(index, "Up")}
         disabled={index === 0 ? true : false}>
@@ -12,6 +13,7 @@ const ButtonList = ({ index, list, sort }) => {
       </Button>
 
       <Button
+        sx={{ width: 80, m: 1 }}
         variant="contained"
         onClick={() => sort(index, "Down")}
         disabled={index === list.length - 1 ? true : false}>

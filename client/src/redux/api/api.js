@@ -9,6 +9,10 @@ export const loginApi = (user) => {
   return axiosInstance.post(`/login`, user);
 };
 
+export const userUpdateApi = (user) => {
+  return axiosInstance.post(`/user/update`, user);
+};
+
 // Exercise api //
 export const getAllExerciseApi = () => {
   return axiosInstance.get(`/exercise`);

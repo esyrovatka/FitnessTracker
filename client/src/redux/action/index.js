@@ -23,6 +23,7 @@ import {
   registrApi,
   updateWorkoutApi,
   updExerciseApi,
+  userUpdateApi,
 } from "../api/api";
 
 // user action //
@@ -42,7 +43,18 @@ export const loginAction = (user) => async (dispatch) => {
   try {
     dispatch({ type: IS_UTHORIZED_LOADING });
     const response = await loginApi(user);
-    localStorage.setItem("token", response.data);
+    localStorage.setItem("token", response.data.token);
+    dispatch({ type: IS_AUTHORIZED, payload: response.data.user[0] });
+  } catch (err) {
+    dispatch({ type: SET_USER_ERROR, payload: err.response.status });
+  }
+};
+
+export const userUpdateAction = (user) => async (dispatch) => {
+  try {
+    delete user.confirmPassword;
+    dispatch({ type: IS_UTHORIZED_LOADING });
+    await userUpdateApi(user);
     dispatch({ type: IS_AUTHORIZED, payload: user });
   } catch (err) {
     dispatch({ type: SET_USER_ERROR, payload: err.response.status });

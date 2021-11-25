@@ -10,6 +10,7 @@ import SignIn from "./page/SignIn";
 import SignUp from "./page/SignUp";
 import Layout from "./component/layout";
 import VerificationEmail from "./page/VerificationEmail/VerificationEmail";
+import Settings from "./page/Settings";
 
 export default function App() {
   return (
@@ -39,6 +40,9 @@ export default function App() {
           </Route>
           <Route path="/verification">
             <VerificationEmail />
+          </Route>
+          <Route path="/settings">
+            <Settings />
           </Route>
         </Switch>
       </Layout>

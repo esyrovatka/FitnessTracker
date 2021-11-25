@@ -10,6 +10,7 @@ const initialState = {
   currEmail: null,
   error: null,
   isLoading: false,
+  name: "",
 };
 
 export const userReducer = (state = initialState, { type, payload } = {}) => {
@@ -21,6 +22,7 @@ export const userReducer = (state = initialState, { type, payload } = {}) => {
         ...state,
         isAuthorized: true,
         currEmail: payload.email,
+        name: payload.name,
         isLoading: false,
       };
     case IS_LOGOUT:

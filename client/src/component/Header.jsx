@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -9,16 +10,22 @@ import {
 } from "@mui/material/";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { useDispatch } from "react-redux";
 import { logOut } from "../redux/action";
+import { PagePaths } from "../constants/PagePaths";
 
-const actions = [{ icon: <LogoutIcon />, name: "LogOut" }];
+const actions = [
+  { icon: <SettingsIcon />, name: "Settings" },
+  { icon: <LogoutIcon />, name: "LogOut" },
+];
 
 const Header = ({ name }) => {
   const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(logOut());
+  const history = useHistory();
+  const handleClick = (name) => () => {
+    name === "Settings" && history.push(PagePaths.settings);
+    name === "LogOut" && dispatch(logOut());
   };
 
   return (
@@ -44,7 +51,7 @@ const Header = ({ name }) => {
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
-              onClick={handleClick}
+              onClick={handleClick(action.name)}
             />
           ))}
         </SpeedDial>

@@ -35,6 +35,9 @@ const LinkMenu = () => {
   const loginLink = () => {
     history.push(PagePaths.login);
   };
+  const settingsLink = () => {
+    history.push(PagePaths.settings);
+  };
 
   const allWorkout = useSelector(workout);
   const currWorkoutDate = useSelector(currData);
@@ -65,6 +68,7 @@ const LinkMenu = () => {
         name="Edit Workout"
         invisible={!currWorkout && true}
       />
+      <HeaderLink clickHandler={settingsLink} name="Settings" />
     </>
   ) : (
     <>

@@ -18,7 +18,7 @@ const createExecrises = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.SERCRET_KEY);
-
+    console.log(decoded);
     const { name, type } = req.body;
     const exercise = new Exercise({ name, type, userId: decoded.userId });
     await exercise.save();

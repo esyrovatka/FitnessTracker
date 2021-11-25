@@ -65,7 +65,12 @@ const CreateWorkoutContainer = ({
   return (
     <Box>
       <FormControl
-        sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          m: 1,
+        }}>
         <Select
           sx={textFieldStyle}
           value={currExercise.name}
@@ -98,7 +103,10 @@ const CreateWorkoutContainer = ({
 
         <ButtonList index={index} list={workout.exerciseList} sort={sort} />
 
-        <Button variant="contained" onClick={() => deleteExercise(currExer)}>
+        <Button
+          variant="contained"
+          onClick={() => deleteExercise(currExer)}
+          sx={{ width: 100 }}>
           Delete
         </Button>
 
