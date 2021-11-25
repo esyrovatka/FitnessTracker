@@ -32,17 +32,15 @@ const CalendarComponent = ({ workoutData }) => {
             workoutData &&
             !DayComponentProps.outsideCurrentMonth &&
             workoutData.find(
-              (item) =>
-                item.getDate() === day.getDate() &&
-                item.getMonth() === day.getMonth()
+              (item) => item.toLocaleDateString() === day.toLocaleDateString()
             );
-
+          const disabledDay = !isSelect && day < new Date();
           return (
             <Badge
               key={String(day)}
               overlap="circular"
               badgeContent={isSelect && "🌚"}>
-              <PickersDay {...DayComponentProps} />
+              <PickersDay {...DayComponentProps} disabled={disabledDay} />
             </Badge>
           );
         }}

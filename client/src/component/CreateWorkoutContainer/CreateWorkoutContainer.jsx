@@ -11,9 +11,8 @@ import {
 import { useState } from "react";
 import ButtonList from "../EditExerciseComponent/ButtonList";
 import sortExercise from "../../utils/sortExercise";
-import Loader from "../Loader";
 
-const CreateWorkout = ({
+const CreateWorkoutContainer = ({
   exercise,
   allExer,
   changeExercise,
@@ -60,54 +59,48 @@ const CreateWorkout = ({
   return (
     <FormControl
       sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      {currExercise ? (
-        <>
-          <Select
-            sx={textFieldStyle}
-            value={currExercise.name}
-            name="exerciseId"
-            onChange={exerciseChange}>
-            {allExer.map((item) => (
-              <MenuItem key={item._id} value={item.name}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
+      <Select
+        sx={textFieldStyle}
+        value={currExercise.name}
+        name="exerciseId"
+        onChange={exerciseChange}>
+        {allExer.map((item) => (
+          <MenuItem key={item._id} value={item.name}>
+            {item.name}
+          </MenuItem>
+        ))}
+      </Select>
 
-          <TextField
-            sx={textFieldStyle}
-            required
-            name="repeats"
-            value={currExer.repeats}
-            label="repeats"
-            onChange={handleChange}
-          />
+      <TextField
+        sx={textFieldStyle}
+        required
+        name="repeats"
+        value={currExer.repeats}
+        label="repeats"
+        onChange={handleChange}
+      />
 
-          <TextField
-            sx={textFieldStyle}
-            required
-            name="measurement"
-            value={currExer.measurement}
-            label="measurement"
-            onChange={handleChange}
-          />
+      <TextField
+        sx={textFieldStyle}
+        required
+        name="measurement"
+        value={currExer.measurement}
+        label="measurement"
+        onChange={handleChange}
+      />
 
-          <ButtonList index={index} list={workout.exerciseList} sort={sort} />
+      <ButtonList index={index} list={workout.exerciseList} sort={sort} />
 
-          <Button variant="contained" onClick={() => deleteExercise(currExer)}>
-            Delete
-          </Button>
+      <Button variant="contained" onClick={() => deleteExercise(currExer)}>
+        Delete
+      </Button>
 
-          <Typography sx={textFieldStyle}>{currExercise.type}</Typography>
-        </>
-      ) : (
-        <Loader />
-      )}
+      <Typography sx={textFieldStyle}>{currExercise.type}</Typography>
     </FormControl>
   );
 };
 
-CreateWorkout.defaultProps = {
+CreateWorkoutContainer.defaultProps = {
   deleteExercise: () => {},
   allExer: [],
   changeExercise: () => {},
@@ -117,7 +110,7 @@ CreateWorkout.defaultProps = {
   exercise: {},
 };
 
-CreateWorkout.propTypes = {
+CreateWorkoutContainer.propTypes = {
   deleteExercise: PropTypes.func,
   changeExercise: PropTypes.func,
   setWorkout: PropTypes.func,
@@ -127,4 +120,4 @@ CreateWorkout.propTypes = {
   exercise: PropTypes.object,
 };
 
-export default CreateWorkout;
+export default CreateWorkoutContainer;

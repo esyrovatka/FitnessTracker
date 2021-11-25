@@ -32,12 +32,13 @@ const updateExecrises = async (req, res) => {
   try {
     console.log(req.body);
     for (let i = 0; i < req.body.length; i++) {
-      const result = await Exercise.findOneAndUpdate(
+      // note: not optimal, redesign this later
+      await Exercise.findOneAndUpdate(
         { _id: req.body[i]._id },
         { name: req.body[i].name, type: req.body[i].type }
       );
     }
-    res.status(200);
+    res.sendStatus(200);
   } catch (err) {
     console.log(err);
   }

@@ -2,15 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material/";
 import { useDispatch, useSelector } from "react-redux";
-import sortExercise from "../../utils/sortExercise";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 import {
   exerciseList,
   exerciseIsLoad,
   workout,
   isAuthorized,
 } from "../../redux/selectors";
-
-import EditExerciseComponent from "../../component/EditExerciseComponent";
 import {
   delExercise,
   getAllExercise,
@@ -21,8 +20,9 @@ import Header from "../../component/Header";
 import ModalComponent from "../../component/ModalComponent";
 import Loader from "../../component/Loader";
 import СonfirmationModal from "../../component/СonfirmationModal";
+import EditExerciseComponent from "../../component/EditExerciseComponent";
 
-const ExersiceEdit = () => {
+export const ExersiceEdit = () => {
   const style = {
     marginTop: 25,
     display: "flex",
@@ -43,7 +43,6 @@ const ExersiceEdit = () => {
   const isLoad = useSelector(exerciseIsLoad);
   const isAuth = useSelector(isAuthorized);
   const [updateList, setUpdateList] = useState(allExercise);
-
   // info modal
   const [open, setOpen] = useState(false);
   const modalOpen = () => {
@@ -103,10 +102,13 @@ const ExersiceEdit = () => {
     }
   };
 
-  const sort = (index, type) => {
-    setUpdateList(sortExercise(index, type, updateList));
+  const disabl = () => {
+    if (updateList.length) {
+      return false;
+    } else {
+      return true;
+    }
   };
-
   return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <ModalComponent openModal={open} name="Exercise Update!" />
@@ -127,15 +129,22 @@ const ExersiceEdit = () => {
             Exersice Edit
           </Typography>
 
-          <EditExerciseComponent
-            list={updateList}
-            updList={setUpdateList}
-            sort={sort}
-            deleteExercise={deleteExercise}
-          />
+          {updateList.length ? (
+            <DndProvider backend={HTML5Backend}>
+              <EditExerciseComponent
+                list={updateList}
+                updList={setUpdateList}
+                deleteExercise={deleteExercise}
+              />
+            </DndProvider>
+          ) : (
+            <Typography component="h3">You need create exercise</Typography>
+          )}
+
           <Button
             variant="contained"
             sx={{ mt: 3, mb: 2, width: 140 }}
+            disabled={disabl()}
             onClick={updateExercise}>
             Update
           </Button>
@@ -146,5 +155,3 @@ const ExersiceEdit = () => {
     <Redirect to="/login" />
   );
 };
-
-export default ExersiceEdit;

@@ -1,3 +1,1 @@
-import ExersiceEdit from "./ExersiceEdit";
-
-export default ExersiceEdit;
+export { ExersiceEdit as default } from "./ExersiceEdit";

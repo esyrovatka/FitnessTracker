@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-function getTokenFromHeader(req, res, next) {
+function authMW(req, res, next) {
   try {
     if (
       req.headers.authorization &&
@@ -20,4 +20,4 @@ function getTokenFromHeader(req, res, next) {
   }
 }
 
-module.exports = getTokenFromHeader;
+module.exports = authMW;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography } from "@mui/material/";
-import CreateWorkout from "../../component/CreateWorkout";
+import CreateWorkout from "../../component/CreateWorkoutContainer";
 import Loader from "../../component/Loader";
 import Header from "../../component/Header";
 import exerciseValidation from "../../utils/exerciseValidation";

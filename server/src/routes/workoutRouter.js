@@ -1,6 +1,5 @@
-const express = require("express");
-const router = express.Router();
-const getTokenFromHeader = require("../middleware/authMiddleware");
+const { Router } = require("express");
+const router = Router();
 const {
   createWorkout,
   getWorkout,
@@ -8,9 +7,9 @@ const {
   deleteWorkout,
 } = require("../controllers/workoutControllers.js");
 
-router.get("/workout", getTokenFromHeader, getWorkout);
-router.post("/workout", getTokenFromHeader, createWorkout);
-router.put("/workout/edit", getTokenFromHeader, editWorkout);
-router.post("/workout/delete", getTokenFromHeader, deleteWorkout);
+router.get("/", getWorkout);
+router.post("/", createWorkout);
+router.put("/edit", editWorkout);
+router.post("/delete", deleteWorkout);
 
 module.exports = router;

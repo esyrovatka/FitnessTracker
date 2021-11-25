@@ -17,7 +17,7 @@ const createWorkout = async (req, res) => {
     });
     await workout.save();
     console.log("Workout create");
-    res.status(200).json(workout);
+    res.sendStatus(200).json(workout);
   } catch (err) {
     console.log(err);
   }
@@ -33,7 +33,7 @@ const editWorkout = async (req, res) => {
     await Workout.findOneAndUpdate({ _id }, { exerciseList });
 
     console.log("Workout edit");
-    res.status(200);
+    res.sendStatus(200);
   } catch (err) {
     console.log(err);
   }

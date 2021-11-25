@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 import {
   exerciseList,
   exerciseIsLoad,
   currData,
   isAuthorized,
 } from "../../redux/selectors";
+import update from "immutability-helper";
 import { Box, Button, Typography } from "@mui/material/";
 import { createWorkout, getAllExercise } from "../../redux/action";
 import Header from "../../component/Header";
 import Loader from "../../component/Loader";
-import CreateWorkout from "../../component/CreateWorkout";
+import CreateWorkoutContainer from "../../component/CreateWorkoutContainer";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Redirect } from "react-router-dom";
 import exerciseValidation from "../../utils/exerciseValidation";
@@ -92,9 +95,23 @@ const NewWorkout = () => {
       ...workout,
       exerciseList: newList,
     };
-
     setWorkout(updateWorkout);
   };
+
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragCard = workout.exerciseList[dragIndex];
+      setWorkout(
+        update(workout.exerciseList, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
+        })
+      );
+    },
+    [workout, setWorkout]
+  );
 
   return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
@@ -108,28 +125,37 @@ const NewWorkout = () => {
           </Button>
 
           {workout.exerciseList.length ? (
-            workout.exerciseList.map((item, index) => (
-              <CreateWorkout
-                key={item.id}
-                exercise={item}
-                allExer={allExercise}
-                changeExercise={changeExercise}
-                index={index}
-                exerciseList={workout.exerciseList}
-                setWorkout={setWorkout}
-                workout={workout}
-                deleteExercise={deleteExercise}
-              />
-            ))
+            <DndProvider backend={HTML5Backend}>
+              {workout.exerciseList.map((item, index) => (
+                <CreateWorkoutContainer
+                  key={item.id}
+                  exercise={item}
+                  allExer={allExercise}
+                  changeExercise={changeExercise}
+                  index={index}
+                  exerciseList={workout.exerciseList}
+                  setWorkout={setWorkout}
+                  workout={workout}
+                  deleteExercise={deleteExercise}
+                  moveCard={moveCard}
+                  id={item.id}
+                />
+              ))}
+            </DndProvider>
           ) : (
-            <div>No Exercise</div>
+            <div>Add exercise to workout</div>
           )}
+
           {!validWorkout && (
             <Typography sx={{ color: "red" }}>
               please enter correct info
             </Typography>
           )}
-          <Button variant="contained" sx={butStyle} onClick={createNewWorkout}>
+          <Button
+            variant="contained"
+            sx={butStyle}
+            onClick={createNewWorkout}
+            disabled={workout.exerciseList.length ? false : true}>
             Create Workout
           </Button>
         </Box>
