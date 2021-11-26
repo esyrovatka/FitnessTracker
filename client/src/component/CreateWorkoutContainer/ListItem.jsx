@@ -12,13 +12,11 @@ import {
 
 export const ListItem = ({
   id,
-  item,
   index,
   moveCard,
   changeExercise,
   deleteExercise,
   exercise,
-
   setValidWorkout,
   allExer,
   workoutValidation,
@@ -49,8 +47,8 @@ export const ListItem = ({
   };
 
   useEffect(() => {
-    changeExercise(currExer); // eslint-disable-next-line
-  }, [currExer]);
+    changeExercise(currExer);
+  }, [currExer]); // eslint-disable-line
 
   const currExercise = allExer.find((item) => item._id === currExer.exerciseId);
   //start dnd script//
@@ -143,8 +141,6 @@ export const ListItem = ({
           label="measurement"
           onChange={handleChange}
         />
-
-        {/* <ButtonList index={index} list={workout.exerciseList} sort={sort} /> */}
 
         <Button
           variant="contained"

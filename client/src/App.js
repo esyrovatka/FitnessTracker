@@ -14,10 +14,20 @@ import Settings from "./page/Settings";
 import "./App.css";
 
 export default function App() {
+  // const pagesPathsList = [
+  //   {
+  //     path: "/", exact: true, Component: Dashbord
+  //   }
+  //   {
+  //     path: "/exercise", Component: NewExercise
+  //   }
+  // ]
+
   return (
     <Router>
       <Layout>
         <Switch>
+          {/* {pagesPathsList.map(({Component, path, exact}) => <Route path={path} exact={!!exact}>{Component}</Route>)} */}
           <Route path="/" exact>
             <Dashbord />
           </Route>

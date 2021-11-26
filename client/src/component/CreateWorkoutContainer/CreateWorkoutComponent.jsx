@@ -24,7 +24,6 @@ const CreateWorkoutComponent = ({
           key={card.id || card._id}
           index={index}
           id={card.id}
-          item={card}
           moveCard={moveCard}
           list={list}
           deleteExercise={deleteExercise}

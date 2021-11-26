@@ -25,6 +25,8 @@ import {
   updExerciseApi,
   userUpdateApi,
 } from "../api/api";
+import store from "../store";
+import { attachUnauthHandler } from "../api/axiosConfig";
 
 // user action //
 export const registrAction = (user) => async (dispatch) => {
@@ -165,3 +167,6 @@ export const getCurrData = (currData) => (dispatch) => {
     payload: currData,
   });
 };
+
+// common reaction for 401 error
+attachUnauthHandler(() => store.dispatch(logOut()));

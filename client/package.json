@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.16.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.12.3",
@@ -14,8 +15,11 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.23.0",
+    "babel-jest": "^27.3.1",
     "date-fns": "^2.25.0",
     "immutability-helper": "^3.1.1",
+    "jest": "^27.3.1",
+    "jest-extended": "^1.1.0",
     "react": "^17.0.2",
     "react-calendar": "^3.5.0",
     "react-dnd": "^14.0.4",
@@ -25,6 +29,7 @@
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-test-renderer": "^17.0.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "ts-node": "^10.4.0",
@@ -32,12 +37,16 @@
     "web-vitals": "^1.0.1"
   },
   "presets": [
-    "@babel/preset-flow"
+    "@babel/preset-flow",
+    "babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-jsx"
   ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "flow": "flow"
   },

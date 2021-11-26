@@ -10,8 +10,4 @@ const enhancers =
 
 const store = createStore(rootReducer, enhancers);
 
-store.dispatchExport = (action) => {
-  store.dispatch(action);
-};
-
 export default store;

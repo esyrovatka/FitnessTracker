@@ -102,13 +102,14 @@ export const ExersiceEdit = () => {
     }
   };
 
-  const disabl = () => {
-    if (updateList.length) {
-      return false;
-    } else {
-      return true;
-    }
-  };
+  // const disabl = () => !updateList.length
+  // // {
+  // //   if (updateList.length) {
+  // //     return false;
+  // //   } else {
+  // //     return true;
+  // //   }
+  // // };
   return isAuth ? (
     <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
       <ModalComponent openModal={open} name="Exercise Update!" />
@@ -144,7 +145,8 @@ export const ExersiceEdit = () => {
           <Button
             variant="contained"
             sx={{ mt: 3, mb: 2, width: 140 }}
-            disabled={disabl()}
+            // disabled={disabl()}
+            disabled={!updateList.length}
             onClick={updateExercise}>
             Update
           </Button>
