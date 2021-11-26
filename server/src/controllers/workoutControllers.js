@@ -1,11 +1,8 @@
-const User = require("../models/userModel.js");
 const Workout = require("../models/workoutModel.js");
 const jwt = require("jsonwebtoken");
 
 const createWorkout = async (req, res) => {
   try {
-    console.log("req.body 1");
-    console.log(req.body, "req.body");
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.SERCRET_KEY);
 
@@ -29,7 +26,6 @@ const editWorkout = async (req, res) => {
     const decoded = jwt.verify(token, process.env.SERCRET_KEY);
 
     const { _id, exerciseList } = req.body;
-    console.log(exerciseList);
     await Workout.findOneAndUpdate({ _id }, { exerciseList });
 
     console.log("Workout edit");
@@ -45,11 +41,6 @@ const getWorkout = async (req, res) => {
     const decoded = jwt.verify(token, process.env.SERCRET_KEY);
     const workout = await Workout.find({ userId: decoded.userId });
     res.status(200).json(workout);
-    // if (workout.length) {
-    //   res.status(200).json(workout);
-    // } else {
-    //   res.status(404).json("Havn't Workout");
-    // }
   } catch (err) {
     console.log(err);
   }

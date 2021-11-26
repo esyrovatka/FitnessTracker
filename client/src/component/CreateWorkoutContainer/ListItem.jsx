@@ -38,7 +38,6 @@ export const ListItem = ({
     const val = event.target.value;
     const name = event.target.name;
     workoutValidation(val) ? setValidWorkout(true) : setValidWorkout(false);
-
     setCurrExer({ ...currExer, [name]: val });
   };
 
@@ -50,8 +49,8 @@ export const ListItem = ({
   };
 
   useEffect(() => {
-    changeExercise(currExer);
-  }, [changeExercise, currExer]);
+    changeExercise(currExer); // eslint-disable-next-line
+  }, [currExer]);
 
   const currExercise = allExer.find((item) => item._id === currExer.exerciseId);
   //start dnd script//

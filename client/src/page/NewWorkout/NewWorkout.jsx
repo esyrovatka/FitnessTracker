@@ -1,23 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import update from "immutability-helper";
+import { Box, Button, Typography } from "@mui/material/";
+import { createWorkout, getAllExercise } from "../../redux/action";
+import Header from "../../component/Header";
+import Loader from "../../component/Loader";
+import exerciseValidation from "../../utils/exerciseValidation";
+import CreateWorkoutComponent from "../../component/CreateWorkoutContainer/CreateWorkoutComponent";
 import {
   exerciseList,
   exerciseIsLoad,
   currData,
   isAuthorized,
 } from "../../redux/selectors";
-import { Box, Button, Typography } from "@mui/material/";
-import { createWorkout, getAllExercise } from "../../redux/action";
-import Header from "../../component/Header";
-import Loader from "../../component/Loader";
-// import CreateWorkoutContainer from "../../component/CreateWorkoutContainer";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Redirect } from "react-router-dom";
-import exerciseValidation from "../../utils/exerciseValidation";
-import CreateWorkoutComponent from "../../component/CreateWorkoutContainer/CreateWorkoutComponent";
+import { PagePaths } from "../../constants/PagePaths";
 
 const NewWorkout = () => {
   const style = {
@@ -27,8 +26,8 @@ const NewWorkout = () => {
     alignItems: "center",
     height: "60vh",
   };
+  const buttonStyle = { mt: 3, mb: 2, width: 180 };
 
-  const butStyle = { mt: 3, mb: 2, width: 180 };
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -50,42 +49,37 @@ const NewWorkout = () => {
 
   const addExercise = () => {
     const keyData = new Date().getTime();
-    if (allExercise[0]) {
-      const updateWorkout = {
-        ...workout,
-        exerciseList: [
-          ...workout.exerciseList,
-          {
-            repeats: 1,
-            measurement: 1,
-            exerciseId: allExercise[0]._id,
-            id: keyData,
-          },
-        ],
-      };
 
-      setWorkout(updateWorkout);
-    } else {
-      history.push("/exercise");
-    }
+    allExercise[0]
+      ? setWorkout({
+          ...workout,
+          exerciseList: [
+            ...workout.exerciseList,
+            {
+              repeats: 1,
+              measurement: 1,
+              exerciseId: allExercise[0]._id,
+              id: keyData,
+            },
+          ],
+        })
+      : history.push(PagePaths.exercise);
   };
 
   const changeExercise = (exercise) => {
-    const newArray = [...workout.exerciseList];
-    const result = newArray.find((elem) => elem.id === exercise.id);
-    result.repeats !== exercise.repeats && (result.repeats = exercise.repeats);
+    const newList = [...workout.exerciseList];
+    const result = workout.exerciseList.findIndex(
+      (elem) => elem.id === exercise.id
+    );
+    newList[result] = exercise;
 
-    result.measurement !== exercise.measurement &&
-      (result.measurement = exercise.measurement);
-
-    result.exerciseId !== exercise.exerciseId &&
-      (result.exerciseId = exercise.exerciseId);
+    setWorkout({ ...workout, exerciseList: newList });
   };
 
   const createNewWorkout = () => {
     exerciseValidation(workout.exerciseList)
       ? setValidWorkout(false)
-      : dispatch(createWorkout(workout)) && history.push("/");
+      : dispatch(createWorkout(workout)) && history.push(PagePaths.dashboard);
   };
 
   const deleteExercise = (currExer) => {
@@ -124,7 +118,7 @@ const NewWorkout = () => {
         <Loader />
       ) : (
         <Box sx={style}>
-          <Button variant="contained" sx={butStyle} onClick={addExercise}>
+          <Button variant="contained" sx={buttonStyle} onClick={addExercise}>
             Add exercise
           </Button>
 
@@ -152,7 +146,7 @@ const NewWorkout = () => {
           )}
           <Button
             variant="contained"
-            sx={butStyle}
+            sx={buttonStyle}
             onClick={createNewWorkout}
             disabled={
               validWorkout && workout.exerciseList.length ? false : true
@@ -165,7 +159,7 @@ const NewWorkout = () => {
       )}
     </Box>
   ) : (
-    <Redirect to="/login" />
+    <Redirect to={PagePaths.login} />
   );
 };
 

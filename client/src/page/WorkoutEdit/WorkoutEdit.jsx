@@ -54,13 +54,10 @@ const WorkoutEdit = () => {
 
   const changeExercise = (exercise) => {
     const newArray = [...currWorkout.exerciseList];
-    const result = newArray.find((elem) => elem._id === exercise._id);
-    result.repeats !== exercise.repeats && (result.repeats = exercise.repeats);
-    result.measurement !== exercise.measurement &&
-      (result.measurement = exercise.measurement);
+    const result = newArray.findIndex((elem) => elem._id === exercise._id);
 
-    result.exerciseId !== exercise.exerciseId &&
-      (result.exerciseId = exercise.exerciseId);
+    newArray[result] = exercise;
+    setCurrWorkout({ ...currWorkout, exerciseList: newArray });
   };
 
   const editWorkout = () => {
