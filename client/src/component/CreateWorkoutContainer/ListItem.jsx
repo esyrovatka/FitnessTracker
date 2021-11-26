@@ -1,34 +1,33 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
 import {
+  Box,
+  FormControl,
+  Button,
   Select,
   MenuItem,
   TextField,
   Typography,
-  FormControl,
-  Button,
-  Box,
-} from "@mui/material";
-import { useState } from "react";
-import ButtonList from "../EditExerciseComponent/ButtonList";
-import sortExercise from "../../utils/sortExercise";
-import { workoutValidation } from "../../utils/workoutValidation";
+} from "@mui/material/";
 
-const CreateWorkoutContainer = ({
-  exercise,
-  allExer,
-  changeExercise,
+export const ListItem = ({
+  id,
+  item,
   index,
-  setWorkout,
-  workout,
+  moveCard,
+  changeExercise,
   deleteExercise,
-  validWorkout,
+  exercise,
+
   setValidWorkout,
+  allExer,
+  workoutValidation,
 }) => {
   const textFieldStyle = {
     width: 150,
     padding: "0px 10px",
   };
+
   const [currExer, setCurrExer] = useState(exercise);
 
   useEffect(() => {
@@ -54,16 +53,61 @@ const CreateWorkoutContainer = ({
     changeExercise(currExer);
   }, [changeExercise, currExer]);
 
-  const sort = (index, type) => {
-    setWorkout({
-      ...workout,
-      exerciseList: sortExercise(index, type, workout.exerciseList),
-    });
-  };
-
   const currExercise = allExer.find((item) => item._id === currExer.exerciseId);
+  //start dnd script//
+  const style = {
+    border: "1px solid gray",
+    padding: "0.5rem 1rem",
+    marginBottom: ".5rem",
+    backgroundColor: "#f4f4f4",
+    cursor: "move",
+  };
+  const ref = useRef(null);
+  const [{ handlerId }, drop] = useDrop({
+    accept: "card",
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      moveCard(dragIndex, hoverIndex);
+      item.index = hoverIndex;
+    },
+  });
+  const [{ isDragging }, drag] = useDrag({
+    type: "card",
+    item: () => {
+      return { id, index };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  const opacity = isDragging ? 0 : 1;
+  drag(drop(ref));
+  //end dnd script//
   return (
-    <Box>
+    <Box ref={ref} sx={{ ...style, opacity }} data-handler-id={handlerId}>
       <FormControl
         sx={{
           display: "flex",
@@ -101,7 +145,7 @@ const CreateWorkoutContainer = ({
           onChange={handleChange}
         />
 
-        <ButtonList index={index} list={workout.exerciseList} sort={sort} />
+        {/* <ButtonList index={index} list={workout.exerciseList} sort={sort} /> */}
 
         <Button
           variant="contained"
@@ -115,25 +159,3 @@ const CreateWorkoutContainer = ({
     </Box>
   );
 };
-
-CreateWorkoutContainer.defaultProps = {
-  deleteExercise: () => {},
-  allExer: [],
-  changeExercise: () => {},
-  index: null,
-  setWorkout: () => {},
-  workout: {},
-  exercise: {},
-};
-
-CreateWorkoutContainer.propTypes = {
-  deleteExercise: PropTypes.func,
-  changeExercise: PropTypes.func,
-  setWorkout: PropTypes.func,
-  allExer: PropTypes.array,
-  index: PropTypes.number,
-  workout: PropTypes.object,
-  exercise: PropTypes.object,
-};
-
-export default CreateWorkoutContainer;

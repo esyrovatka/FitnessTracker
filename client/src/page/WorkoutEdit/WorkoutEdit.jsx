@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography } from "@mui/material/";
-import CreateWorkoutContainer from "../../component/CreateWorkoutContainer";
 import Loader from "../../component/Loader";
 import Header from "../../component/Header";
 import exerciseValidation from "../../utils/exerciseValidation";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import update from "immutability-helper";
 import {
   delWorkout,
   getAllExercise,
@@ -19,6 +21,7 @@ import {
   workout,
   workoutIsLoad,
 } from "../../redux/selectors";
+import CreateWorkoutComponent from "../../component/CreateWorkoutContainer/CreateWorkoutComponent";
 
 const WorkoutEdit = () => {
   const butStyle = { m: 5, width: 180, padding: "20px" };
@@ -82,6 +85,24 @@ const WorkoutEdit = () => {
     setCurrWorkout(updateWorkout);
   };
 
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragCard = currWorkout.exerciseList[dragIndex];
+
+      setCurrWorkout({
+        ...currWorkout,
+        exerciseList: update(currWorkout.exerciseList, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
+        }),
+      });
+    },
+
+    [setCurrWorkout, currWorkout]
+  );
+
   return isAuth ? (
     !loading ? (
       <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
@@ -99,21 +120,20 @@ const WorkoutEdit = () => {
             .{currWorkoutDate.getYear() + 1900}
           </Typography>
 
-          {currWorkout &&
-            currWorkout.exerciseList.map((item, index) => (
-              <CreateWorkoutContainer
-                key={item._id}
-                index={index}
-                exercise={item}
+          {currWorkout && (
+            <DndProvider backend={HTML5Backend}>
+              <CreateWorkoutComponent
+                workout={currWorkout}
+                list={currWorkout.exerciseList}
+                updList={setCurrWorkout}
+                deleteExercise={deleteExercise}
                 allExer={allExercise}
                 changeExercise={changeExercise}
-                workout={currWorkout}
-                setWorkout={setCurrWorkout}
-                deleteExercise={deleteExercise}
-                validWorkout={validWorkout}
                 setValidWorkout={setValidWorkout}
+                moveCard={moveCard}
               />
-            ))}
+            </DndProvider>
+          )}
 
           {!validWorkout && (
             <Typography sx={{ color: "red" }}>

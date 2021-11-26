@@ -2,21 +2,22 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import update from "immutability-helper";
 import {
   exerciseList,
   exerciseIsLoad,
   currData,
   isAuthorized,
 } from "../../redux/selectors";
-import update from "immutability-helper";
 import { Box, Button, Typography } from "@mui/material/";
 import { createWorkout, getAllExercise } from "../../redux/action";
 import Header from "../../component/Header";
 import Loader from "../../component/Loader";
-import CreateWorkoutContainer from "../../component/CreateWorkoutContainer";
+// import CreateWorkoutContainer from "../../component/CreateWorkoutContainer";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Redirect } from "react-router-dom";
 import exerciseValidation from "../../utils/exerciseValidation";
+import CreateWorkoutComponent from "../../component/CreateWorkoutContainer/CreateWorkoutComponent";
 
 const NewWorkout = () => {
   const style = {
@@ -101,16 +102,19 @@ const NewWorkout = () => {
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {
       const dragCard = workout.exerciseList[dragIndex];
-      setWorkout(
-        update(workout.exerciseList, {
+
+      setWorkout({
+        ...workout,
+        exerciseList: update(workout.exerciseList, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, dragCard],
           ],
-        })
-      );
+        }),
+      });
     },
-    [workout, setWorkout]
+
+    [setWorkout, workout]
   );
 
   return isAuth ? (
@@ -126,23 +130,16 @@ const NewWorkout = () => {
 
           {workout.exerciseList.length ? (
             <DndProvider backend={HTML5Backend}>
-              {workout.exerciseList.map((item, index) => (
-                <CreateWorkoutContainer
-                  key={item.id}
-                  exercise={item}
-                  allExer={allExercise}
-                  changeExercise={changeExercise}
-                  index={index}
-                  exerciseList={workout.exerciseList}
-                  setWorkout={setWorkout}
-                  workout={workout}
-                  deleteExercise={deleteExercise}
-                  moveCard={moveCard}
-                  id={item.id}
-                  validWorkout={validWorkout}
-                  setValidWorkout={setValidWorkout}
-                />
-              ))}
+              <CreateWorkoutComponent
+                workout={workout}
+                list={workout.exerciseList}
+                updList={setWorkout}
+                deleteExercise={deleteExercise}
+                allExer={allExercise}
+                changeExercise={changeExercise}
+                setValidWorkout={setValidWorkout}
+                moveCard={moveCard}
+              />
             </DndProvider>
           ) : (
             <div>Add exercise to workout</div>
