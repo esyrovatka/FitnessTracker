@@ -6,6 +6,7 @@ const Footer = () => {
   const listStyle = {
     display: "flex",
     color: "purple",
+    width: "100%",
   };
   return (
     <List sx={listStyle}>

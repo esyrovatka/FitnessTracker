@@ -15,7 +15,7 @@ const NavPanel = () => {
     color: "#f4f4f4",
     padding: 5,
     borderBottom: "2px solid grey",
-    margin: 5,
+    // margin: 5,
   };
   return (
     <List sx={listStyle}>

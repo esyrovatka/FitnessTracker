@@ -11,6 +11,7 @@ import {
 } from "../../redux/selectors";
 import { userUpdateAction } from "../../redux/action";
 import { PagePaths } from "../../constants/PagePaths";
+import ModalComponent from "../../component/ModalComponent";
 
 const Settings = () => {
   const currEmail = useSelector(currUserEmail);
@@ -18,18 +19,23 @@ const Settings = () => {
   const isAuth = useSelector(isAuthorized);
   const dispatch = useDispatch();
   const [user, setUser] = useState({
-    name: currName,
-    email: currEmail,
+    name: currName || "",
+    email: currEmail || "",
     password: "",
     confirmPassword: "",
   });
 
   const [errorForm, setErrorForm] = useState(null);
-
+  const [open, setOpen] = useState(false);
   const changeHandler = (e) => {
     const { value, name } = e.target;
     validateForm(name, value) ? setErrorForm(null) : setErrorForm("error");
     setUser({ ...user, [name]: value });
+  };
+
+  const blurHandler = (e) => {
+    const { value, name } = e.target;
+    validateForm(name, value) ? setErrorForm(null) : setErrorForm("error");
   };
 
   const validateForm = (name, value) => {
@@ -57,17 +63,27 @@ const Settings = () => {
     } else {
       setUser({ ...user, password: "", confirmPassword: "" });
       dispatch(userUpdateAction(user));
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false);
+      }, 500);
     }
   };
 
   return isAuth ? (
     <Container component="main">
-      <Header />
+      <ModalComponent name="success" openModal={open} />
+      <Header name="Settings" />
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Typography variant="h1" sx={{ textAlign: "center" }}>
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          pt: 10,
+        }}>
+        {/* <Typography variant="h1" sx={{ textAlign: "center" }}>
           Settings
-        </Typography>
+        </Typography> */}
 
         <SettingsComponent
           label="Enter new name:"
@@ -75,6 +91,7 @@ const Settings = () => {
           name="name"
           placeholder="Enter new name"
           changeHandler={changeHandler}
+          blurHandler={blurHandler}
         />
         <SettingsComponent
           label="Edit email:"
@@ -82,6 +99,7 @@ const Settings = () => {
           name="email"
           placeholder="Enter new email"
           changeHandler={changeHandler}
+          blurHandler={blurHandler}
         />
         <SettingsComponent
           label="Enter new password:"
@@ -91,6 +109,7 @@ const Settings = () => {
           name="password"
           placeholder="Enter new password"
           changeHandler={changeHandler}
+          blurHandler={blurHandler}
         />
         <SettingsComponent
           label="Confirm new password:"
@@ -100,11 +119,19 @@ const Settings = () => {
           name="confirmPassword"
           placeholder="Confirm new password"
           changeHandler={changeHandler}
+          blurHandler={blurHandler}
         />
+        {errorForm && (
+          <Typography sx={{ textAlign: "center", color: "red" }}>
+            Add correct info
+          </Typography>
+        )}
+
         <Button
           variant="contained"
           sx={{ mt: 3, mb: 2, width: 150 }}
-          onClick={updateInfo}>
+          onClick={updateInfo}
+          disabled={errorForm ? true : false}>
           Update Info
         </Button>
       </Box>

@@ -11,9 +11,10 @@ import {
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/action";
 import { PagePaths } from "../constants/PagePaths";
+import { currUserName } from "../redux/selectors";
 
 const actions = [
   { icon: <SettingsIcon />, name: "Settings" },
@@ -21,6 +22,7 @@ const actions = [
 ];
 
 const Header = ({ name }) => {
+  const currName = useSelector(currUserName);
   const dispatch = useDispatch();
   const history = useHistory();
   const handleClick = (name) => () => {
@@ -33,15 +35,21 @@ const Header = ({ name }) => {
       sx={{
         color: "purple",
         display: "flex",
-        padding: "0 10%",
+        padding: "0 4%",
         height: 50,
         alignItems: "center",
       }}>
       <Typography variant="h4" component="div">
         {name}
       </Typography>
-
-      <Box sx={{ height: 20, transform: "translate(0px)", flexGrow: 1 }}>
+      <Box
+        sx={{
+          height: 20,
+          transform: "translate(0px)",
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+        }}>
         <SpeedDial
           ariaLabel="SpeedDial basic example"
           direction="left"
@@ -55,6 +63,9 @@ const Header = ({ name }) => {
             />
           ))}
         </SpeedDial>
+        <Typography variant="h4" sx={{ pl: 2 }}>
+          {currName}
+        </Typography>
       </Box>
     </Box>
   );

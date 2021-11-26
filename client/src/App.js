@@ -11,6 +11,7 @@ import SignUp from "./page/SignUp";
 import Layout from "./component/layout";
 import VerificationEmail from "./page/VerificationEmail/VerificationEmail";
 import Settings from "./page/Settings";
+import "./App.css";
 
 export default function App() {
   return (

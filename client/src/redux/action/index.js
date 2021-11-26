@@ -53,6 +53,9 @@ export const loginAction = (user) => async (dispatch) => {
 export const userUpdateAction = (user) => async (dispatch) => {
   try {
     delete user.confirmPassword;
+    !user.password.length && delete user.password;
+    !user.email.length && delete user.email;
+    !user.name.length && delete user.name;
     dispatch({ type: IS_UTHORIZED_LOADING });
     await userUpdateApi(user);
     dispatch({ type: IS_AUTHORIZED, payload: user });

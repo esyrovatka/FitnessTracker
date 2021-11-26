@@ -8,6 +8,7 @@ const SettingsComponent = ({
   changeHandler,
   user,
   label,
+  blurHandler,
 }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -23,6 +24,7 @@ const SettingsComponent = ({
         onChange={changeHandler}
         value={user[name]}
         type={isPassword ? "password" : "text"}
+        onBlur={blurHandler}
       />
     </Box>
   );
