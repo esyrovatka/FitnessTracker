@@ -23,9 +23,7 @@ export const ListItem = ({
   const [{ handlerId }, drop] = useDrop({
     accept: "card",
     collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
+      return { handlerId: monitor.getHandlerId() };
     },
     hover(item, monitor) {
       if (!ref.current) {
@@ -56,9 +54,7 @@ export const ListItem = ({
     item: () => {
       return { id, index };
     },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+    collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));

@@ -13,14 +13,13 @@ const EditExerciseComponent = ({ list, updList, deleteExercise }) => {
 
   const changeExercise = (exercise) => {
     const newArray = [...list];
-    const result = newArray.find((elem) => elem._id === exercise.id);
-    result.name !== exercise.name &&
-      (result.name = exercise.name) &&
-      updList(newArray);
-    result.type !== exercise.type &&
-      (result.type = exercise.type) &&
-      updList(newArray);
+    const result = newArray.findIndex((elem) => elem._id === exercise.id);
+    console.log(newArray[result]);
+    newArray[result].name = exercise.name;
+    newArray[result].type = exercise.type;
+    updList(newArray);
   };
+
   useEffect(() => {
     updList(list);
   }, [list, updList]);

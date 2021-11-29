@@ -16,54 +16,23 @@ import { PagePaths } from "./constants/PagePaths";
 
 export default function App() {
   const pagesPathsList = [
-    {
-      path: PagePaths.dashboard,
-      exact: true,
-      Component: <Dashbord />,
-    },
-    {
-      path: PagePaths.exercise,
-      exact: true,
-      Component: <NewExercise />,
-    },
-    {
-      path: PagePaths.exerciseEdit,
-      Component: <ExersiceEdit />,
-    },
-
-    {
-      path: PagePaths.workout,
-      exact: true,
-      Component: <NewWorkout />,
-    },
-    {
-      path: PagePaths.workoutEdit,
-      Component: <WorkoutEdit />,
-    },
-    {
-      path: PagePaths.login,
-      Component: <SignIn />,
-    },
-    {
-      path: PagePaths.register,
-      Component: <SignUp />,
-    },
-    {
-      path: PagePaths.verification,
-      Component: <VerificationEmail />,
-    },
-    {
-      path: PagePaths.settings,
-      Component: <Settings />,
-    },
+    { path: PagePaths.dashboard, exact: true, Component: <Dashbord /> },
+    { path: PagePaths.exercise, exact: true, Component: <NewExercise /> },
+    { path: PagePaths.exerciseEdit, Component: <ExersiceEdit /> },
+    { path: PagePaths.workout, exact: true, Component: <NewWorkout /> },
+    { path: PagePaths.workoutEdit, Component: <WorkoutEdit /> },
+    { path: PagePaths.login, Component: <SignIn /> },
+    { path: PagePaths.register, Component: <SignUp /> },
+    { path: PagePaths.verification, Component: <VerificationEmail /> },
+    { path: PagePaths.settings, Component: <Settings /> },
   ];
 
   return (
     <Router>
       <Layout>
         <Switch>
-          {pagesPathsList.map(({ path, exact, Component }) => (
-            <Route path={path} exact={!!exact}>
+          {pagesPathsList.map(({ path, exact, Component }, index) => (
+            <Route path={path} exact={!!exact} key={index}>
               {Component}
             </Route>
           ))}

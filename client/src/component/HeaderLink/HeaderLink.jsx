@@ -8,7 +8,7 @@ const HeaderLink = ({ clickHandler, name, invisible }) => {
       <ListItemButton
         onClick={clickHandler}
         sx={{ justifyContent: "center " }}
-        disabled={invisible ? true : false}>
+        disabled={!!invisible}>
         {name}
       </ListItemButton>
     </ListItem>

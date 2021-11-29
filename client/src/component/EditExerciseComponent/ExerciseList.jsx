@@ -14,8 +14,8 @@ const ExerciseList = ({ item, changeExercise }) => {
   };
 
   useEffect(() => {
-    changeExercise(exercise);
-  }, [exercise.name, exercise.type, exercise, changeExercise]);
+    changeExercise(exercise); // eslint-disable-next-line
+  }, [exercise.name, exercise.type, exercise]);
 
   return (
     <>

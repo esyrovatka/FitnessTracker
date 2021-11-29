@@ -12,18 +12,18 @@ To start a project, you need:
 
 Create .env file
 
-In folder client and server need create .env file (you can see an example in .env.example file).
+In client and server folders create .env file (you can see an example in .env.example file).
 
 ### Step 2
 
-You need to install and connect the MongoDB to the server.
+Install and connect the MongoDB to the server.
 
 See [mongodb download](https://www.mongodb.com/try/download) for more information.
 
 ### Step 3
 
-In the client and server directory, you need run **npm install** to add node_modules directory.
+Run **npm install** in the client and server directory to add node_modules directory.
 
 ### Step 4
 
-In the client and server directory, you need run **npm start** to run the app.
+Run **npm start** in the client and server directory to run the app.
