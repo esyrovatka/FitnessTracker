@@ -1,4 +1,4 @@
-# Firness Tracker
+# Fitness Tracker
 
 In this application you can create exercises and workouts, authorization system available, can change user settings.
 
