@@ -4,7 +4,7 @@ In this application you can create exercises and workouts, authorization system 
 
 The main focus is on the front-end part, the server side can be optimized.
 
-## Available Scripts
+## Run project
 
 To start a project, you need:
 
