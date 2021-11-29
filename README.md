@@ -11,11 +11,12 @@ To start a project, you need:
 
 Create .env file
 
-In folder cliet and server need create .env file (you can see an example in .env.example file).
+In folder client and server need create .env file (you can see an example in .env.example file).
 
 ### Step 2
 
-You need to install and connect the MongoDB to the server
+You need to install and connect the MongoDB to the server.
+
 See [mongodb download](https://www.mongodb.com/try/download) for more information.
 
 ### Step 3
