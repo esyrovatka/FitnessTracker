@@ -1,6 +1,7 @@
 # Firness Tracker
 
 In this application you can create exercises and workouts, authorization system available, can change user settings.
+
 The main focus is on the front-end part, the server side can be optimized.
 
 ## Available Scripts
