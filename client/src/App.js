@@ -12,49 +12,61 @@ import Layout from "./component/layout";
 import VerificationEmail from "./page/VerificationEmail/VerificationEmail";
 import Settings from "./page/Settings";
 import "./App.css";
+import { PagePaths } from "./constants/PagePaths";
 
 export default function App() {
-  // const pagesPathsList = [
-  //   {
-  //     path: "/", exact: true, Component: Dashbord
-  //   }
-  //   {
-  //     path: "/exercise", Component: NewExercise
-  //   }
-  // ]
+  const pagesPathsList = [
+    {
+      path: PagePaths.dashboard,
+      exact: true,
+      Component: <Dashbord />,
+    },
+    {
+      path: PagePaths.exercise,
+      exact: true,
+      Component: <NewExercise />,
+    },
+    {
+      path: PagePaths.exerciseEdit,
+      Component: <ExersiceEdit />,
+    },
+
+    {
+      path: PagePaths.workout,
+      exact: true,
+      Component: <NewWorkout />,
+    },
+    {
+      path: PagePaths.workoutEdit,
+      Component: <WorkoutEdit />,
+    },
+    {
+      path: PagePaths.login,
+      Component: <SignIn />,
+    },
+    {
+      path: PagePaths.register,
+      Component: <SignUp />,
+    },
+    {
+      path: PagePaths.verification,
+      Component: <VerificationEmail />,
+    },
+    {
+      path: PagePaths.settings,
+      Component: <Settings />,
+    },
+  ];
 
   return (
     <Router>
       <Layout>
         <Switch>
-          {/* {pagesPathsList.map(({Component, path, exact}) => <Route path={path} exact={!!exact}>{Component}</Route>)} */}
-          <Route path="/" exact>
-            <Dashbord />
-          </Route>
-          <Route path="/exercise" exact>
-            <NewExercise />
-          </Route>
-          <Route path="/exercise/edit">
-            <ExersiceEdit />
-          </Route>
-          <Route path="/workout" exact>
-            <NewWorkout />
-          </Route>
-          <Route path="/workout/edit">
-            <WorkoutEdit />
-          </Route>
-          <Route path="/login">
-            <SignIn />
-          </Route>
-          <Route path="/registr">
-            <SignUp />
-          </Route>
-          <Route path="/verification">
-            <VerificationEmail />
-          </Route>
-          <Route path="/settings">
-            <Settings />
-          </Route>
+          {pagesPathsList.map(({ path, exact, Component }) => (
+            <Route path={path} exact={!!exact}>
+              {Component}
+            </Route>
+          ))}
         </Switch>
       </Layout>
     </Router>
