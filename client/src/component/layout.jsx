@@ -9,6 +9,7 @@ import logo4 from "../image/logo4.jpg";
 import logo5 from "../image/logo5.jpg";
 import logo6 from "../image/logo6.jpg";
 import login from "../image/login.jpg";
+import registration from "../image/registration.jpg";
 import { useLocation } from "react-router";
 
 const Layout = ({ children }) => {
@@ -53,9 +54,9 @@ const Layout = ({ children }) => {
       imgLogo = login;
       break;
 
-    // case "/register":
-    //   imgLogo = logo;
-    //   break;
+    case "/register":
+      imgLogo = registration;
+      break;
 
     default:
       imgLogo = "";

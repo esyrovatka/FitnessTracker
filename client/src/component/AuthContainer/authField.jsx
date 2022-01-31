@@ -46,10 +46,12 @@ const AuthField = ({
             fullWidth
             id="email"
             label="Email Address"
+            placeholder="Example@gmail.com"
             name="email"
             autoFocus
             onChange={handleChange}
             value={user.email}
+            autoComplete="off"
           />
 
           <TextField
@@ -57,6 +59,7 @@ const AuthField = ({
             margin="normal"
             required
             fullWidth
+            placeholder="******"
             name="password"
             label="Password"
             type="password"
@@ -101,11 +104,10 @@ const AuthPage = styled(Container)`
   align-items: center;
   .form-group {
     max-width: 300px;
-    background-color: #413a3a;
-    // background-color: rgba(116, 62, 240, 0.2);
+    background-color: rgb(65, 58, 58, 0.6);
     margin: 50px;
     padding: 50px;
-    border: 7px solid #21c9a6;
+    border: 1px solid #21c9a6;
     .form-avatar {
       display: flex;
       flex-direction: column;
@@ -116,14 +118,11 @@ const AuthPage = styled(Container)`
       }
       .form-avatar-title {
         color: #21c9a6;
-        fontweight: 600;
+        font-weight: 600;
       }
     }
 
     .form-field {
-      // div div {
-      //   border: 1px solid #21c9a6;
-      // }
       label {
         color: #21c9a6;
       }
@@ -139,7 +138,7 @@ const AuthPage = styled(Container)`
     }
     .form-auth-btn {
       color: #fff;
-      border: 1px solid #6b6363;
+      border: 1px solid #21c9a6;
     }
     .form-auth-btn:hover {
       color: #413a3a;
@@ -149,10 +148,10 @@ const AuthPage = styled(Container)`
       background-color: #21c9a6;
     }
     .css-1vhaqj4-MuiButtonBase-root-MuiButton-root:hover {
-      box-shadow: 10px 5px 5px #000;
+      box-shadow: 5px 3px 3px #000;
     }
     .Mui-disabled {
-      background-color: #413a3a;
+      background-color: rgb(65, 58, 58, 0.6);
     }
     .css-16cu1k8-MuiTypography-root-MuiLink-root {
       color: #21c9a6;

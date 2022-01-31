@@ -37,7 +37,7 @@ const AuthContainer = ({ type }) => {
 
   const emailValid = useCallback(() => {
     const res = user.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-    console.log("re", res[2]);
+    // console.log("re", res[2]);
     return res;
   }, [user.email]);
 

@@ -6,16 +6,16 @@ const NavPanel = () => {
   const listStyle = {
     display: "flex",
     flexDirection: "column",
-    bgcolor: "#fff",
-    opacity: "0.1",
+    bgcolor: "rgb(255 255 255 / 10%)",
     minWidth: 250,
     textAlign: "center",
-    color: "#992a22",
+    color: "#21c9a6",
     fontWeight: 600,
+    margin: "0px 0px 0px 30px",
   };
 
   const typographyStyle = {
-    color: "#fb4e4e",
+    color: "#21c9a6",
     padding: 5,
     borderBottom: "2px solid grey",
     fontWeight: 600,
