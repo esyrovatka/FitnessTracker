@@ -12,7 +12,13 @@ const SettingsComponent = ({
 }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Typography sx={{ display: "flex", alignItems: "center", width: 200 }}>
+      <Typography
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          width: 200,
+          fontWeight: 900,
+        }}>
         {label}
       </Typography>
       <TextField

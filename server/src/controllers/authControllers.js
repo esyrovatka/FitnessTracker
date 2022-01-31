@@ -1,5 +1,6 @@
 const User = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const registr = async (req, res) => {
   try {
@@ -8,7 +9,8 @@ const registr = async (req, res) => {
     if (findUser.length) {
       res.status(406).json("email is already in use");
     } else {
-      const user = new User({ email, password });
+      const hash_password = bcrypt.hashSync(password, 10);
+      const user = new User({ email, password: hash_password });
       await user.save();
       token = jwt.sign({ userId: user._id }, process.env.SERCRET_KEY, {
         expiresIn: "180000s",
@@ -23,14 +25,17 @@ const registr = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.find({ email, password });
+    const user = await User.find({ email });
+
     if (user.length) {
-      token = jwt.sign({ userId: user[0]._id }, process.env.SERCRET_KEY, {
+      const token = jwt.sign({ userId: user[0]._id }, process.env.SERCRET_KEY, {
         expiresIn: "180000s",
       });
-      res.status(200).json({ token, user });
+      bcrypt.compareSync(password, user[0].password)
+        ? res.status(200).json({ token, user })
+        : res.status(404).json("password not correct");
     } else {
-      res.status(404).json("not found user with this email and password");
+      res.status(404).json("not found user with this email");
     }
   } catch (err) {
     console.log(err);

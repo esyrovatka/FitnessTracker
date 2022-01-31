@@ -34,7 +34,9 @@ const CalendarComponent = ({ workoutData }) => {
             workoutData.find(
               (item) => item.toLocaleDateString() === day.toLocaleDateString()
             );
-          const disabledDay = !isSelect && day < new Date();
+          console.log();
+          const disabledDay =
+            !isSelect && day < new Date(Date.now() - 1000 * 60 * 60 * 24);
           return (
             <Badge
               key={String(day)}

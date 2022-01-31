@@ -7,6 +7,8 @@ const Footer = () => {
     display: "flex",
     color: "purple",
     width: "100%",
+    backgroundColor: "#f6b85a",
+    opacity: "0.7",
   };
   return (
     <List sx={listStyle}>

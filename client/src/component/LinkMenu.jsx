@@ -55,25 +55,39 @@ const LinkMenu = () => {
   }, [currWorkoutDate, allWorkout]);
   return isAuth ? (
     <>
-      <HeaderLink clickHandler={dashboardLink} name="Dashboard" />
-      <HeaderLink clickHandler={exerciseLink} name="New Exercise" />
-      <HeaderLink clickHandler={exerciseEditLink} name="Edit Exercise" />
+      <HeaderLink clickHandler={dashboardLink} name="Dashboard" path="/" />
+      <HeaderLink
+        clickHandler={exerciseLink}
+        name="New Exercise"
+        path="/exercise"
+      />
+      <HeaderLink
+        clickHandler={exerciseEditLink}
+        name="Edit Exercise"
+        path="/exercise/edit"
+      />
       <HeaderLink
         clickHandler={workoutLink}
         name="New Workout"
         invisible={currWorkout && true}
+        path="/workout"
       />
       <HeaderLink
         clickHandler={workoutEditLink}
         name="Edit Workout"
         invisible={!currWorkout && true}
+        path="/workout/edit"
       />
-      <HeaderLink clickHandler={settingsLink} name="Settings" />
+      <HeaderLink
+        clickHandler={settingsLink}
+        name="Settings"
+        path="/settings"
+      />
     </>
   ) : (
     <>
-      <HeaderLink clickHandler={loginLink} name="SignIn" />
-      <HeaderLink clickHandler={registerLink} name="SignUp" />
+      <HeaderLink clickHandler={loginLink} name="SignIn" path="/login" />
+      <HeaderLink clickHandler={registerLink} name="SignUp" path="/register" />
     </>
   );
 };

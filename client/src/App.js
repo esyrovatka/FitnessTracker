@@ -28,16 +28,18 @@ export default function App() {
   ];
 
   return (
-    <Router>
-      <Layout>
-        <Switch>
-          {pagesPathsList.map(({ path, exact, Component }, index) => (
-            <Route path={path} exact={!!exact} key={index}>
-              {Component}
-            </Route>
-          ))}
-        </Switch>
-      </Layout>
-    </Router>
+    <div id="main">
+      <Router>
+        <Layout>
+          <Switch>
+            {pagesPathsList.map(({ path, exact, Component }, index) => (
+              <Route path={path} exact={!!exact} key={index}>
+                {Component}
+              </Route>
+            ))}
+          </Switch>
+        </Layout>
+      </Router>
+    </div>
   );
 }

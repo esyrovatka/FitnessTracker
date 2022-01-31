@@ -112,7 +112,7 @@ const NewWorkout = () => {
   );
 
   return isAuth ? (
-    <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
+    <Box component="main" sx={{ width: "100%" }}>
       <Header name="Create Workout" />
       {isLoad ? (
         <Loader />

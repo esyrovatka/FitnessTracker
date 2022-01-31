@@ -76,7 +76,7 @@ const Dashboard = () => {
 
   return isAuth ? (
     !Loading ? (
-      <Box component="main" sx={{ backgroundColor: "#f4f4f4", width: "100%" }}>
+      <Box component="main" sx={{ width: "100%" }}>
         <Header name="Dashboard" />
         <Box sx={style}>
           <CalendarComponent workoutData={workoutData} sx={{ width: "50%" }} />

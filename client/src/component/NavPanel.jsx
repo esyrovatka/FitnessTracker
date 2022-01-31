@@ -6,16 +6,20 @@ const NavPanel = () => {
   const listStyle = {
     display: "flex",
     flexDirection: "column",
-    bgcolor: "#a87ee0",
+    bgcolor: "#fff",
+    opacity: "0.1",
     minWidth: 250,
     textAlign: "center",
+    color: "#992a22",
+    fontWeight: 600,
   };
 
   const typographyStyle = {
-    color: "#f4f4f4",
+    color: "#fb4e4e",
     padding: 5,
     borderBottom: "2px solid grey",
-    // margin: 5,
+    fontWeight: 600,
+    margin: "0px 20px 15px",
   };
   return (
     <List sx={listStyle}>
